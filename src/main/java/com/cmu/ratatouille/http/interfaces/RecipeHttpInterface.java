@@ -135,7 +135,7 @@ public class RecipeHttpInterface extends HttpInterface {
     @Produces({ MediaType.APPLICATION_JSON })
     public AppResponse getRecipes(@Context HttpHeaders headers,
                                   @QueryParam("title") String ingredients,
-                                  @QueryParam("cal") String calorie,
+                                  @QueryParam("calorie") String calorie,
                                   @QueryParam("rating") String rating,
                                   @QueryParam("sortby") String sortBy,
                                   @QueryParam("orderby") String orderBy,
@@ -154,7 +154,7 @@ public class RecipeHttpInterface extends HttpInterface {
                     calFrom = calorie;
                     calTo = Integer.MAX_VALUE+"";
                 }
-                recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(ingredients, calFrom, calTo, rating, "5", sortBy, orderBy);
+                recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(ingredients, calFrom, calTo, rating, sortBy, orderBy);
             }else{
                 // Get all
                 recipes = RecipeManager.getInstance().getAllRecipes();

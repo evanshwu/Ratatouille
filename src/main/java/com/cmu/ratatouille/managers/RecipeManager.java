@@ -4,7 +4,9 @@ import com.cmu.ratatouille.exceptions.AppException;
 import com.cmu.ratatouille.exceptions.AppInternalServerException;
 import com.cmu.ratatouille.models.Book;
 import com.cmu.ratatouille.models.Recipe;
+import com.cmu.ratatouille.utils.AppLogger;
 import com.cmu.ratatouille.utils.MongoPool;
+import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 import com.mongodb.client.FindIterable;
@@ -155,37 +157,42 @@ public class RecipeManager extends Manager {
     }
 
     //TODO: Test required
-    public ArrayList<Recipe> getRecipeWithFiltersAndSortings(String ingredients, String calFrom, String calTo, String ratingFrom, String ratingTo, String sortBy, String orderBy) throws AppException {
+    public ArrayList<Recipe> getRecipeWithFiltersAndSortings(String ingredients, String calFrom, String calTo, String ratingFrom, String sortBy, String orderBy) throws AppException {
+        AppLogger.info("[ingredients]="+ingredients+"[cal]"+calFrom+calTo+"[rating]"+ratingFrom+"[sortby]"+sortBy+"[orderby]"+orderBy);
         BasicDBObject queryObject = new BasicDBObject();
         List<BasicDBObject> queryObjectList = new ArrayList<>();
         // Check ingredients
         if(ingredients!=null){
+            AppLogger.info("[getRecipeWithFiltersAndSortings] ingredient query: "+ingredients);
             BasicDBObject containsQuery = new BasicDBObject();
-            containsQuery.put("ingredient", java.util.regex.Pattern.compile(ingredients));
+            containsQuery.put("ingredient", new BasicDBObject("$in", ingredients));
             queryObjectList.add(containsQuery);
         }
         //Check calorie range
         if(calFrom!=null && calTo!=null){
+            AppLogger.info("[getRecipeWithFiltersAndSortings] calorie query: "+calFrom+"~"+calTo);
             BasicDBObject gtCalQuery = new BasicDBObject();
-            gtCalQuery.put("calorie", new BasicDBObject("$gt", calFrom).append("$lt", calTo));
+            gtCalQuery.put("calorie", new BasicDBObject("$gt", Integer.parseInt(calFrom)).append("$lt", Integer.parseInt(calTo)));
             queryObjectList.add(gtCalQuery);
         }
         // Check rating range
-        if(ratingFrom!=null && ratingTo!=null) {
+        if(ratingFrom!=null) {
+            AppLogger.info("[getRecipeWithFiltersAndSortings] ratings query: "+ratingFrom+"~5");
             BasicDBObject gtRateQuery = new BasicDBObject();
-            gtRateQuery.put("rating", new BasicDBObject("$gt", ratingFrom).append("$lt", ratingTo));
+            gtRateQuery.put("rating", new BasicDBObject("$gt", Double.parseDouble(ratingFrom)).append("$lt", 5));
             queryObjectList.add(gtRateQuery);
         }
         // Combine all query options
         queryObject.put("$and", queryObjectList);
         // Check if sorting is requested
          FindIterable<Document> recipeDocs;
-        if(!sortBy.equals("") && !orderBy.equals("")){
+        if(sortBy!=null && orderBy!=null){
             if(orderBy.equals("DESC"))
                 recipeDocs = recipeCollection.find(queryObject).sort(new BasicDBObject(sortBy, OrderBy.DESC.getIntRepresentation()));
             else
                 recipeDocs = recipeCollection.find(queryObject).sort(new BasicDBObject(sortBy, OrderBy.ASC.getIntRepresentation()));
         }else{
+            AppLogger.info("[getRecipeWithFiltersAndSortings] start query: "+queryObject.toString());
             recipeDocs = recipeCollection.find(queryObject);
         }
 
