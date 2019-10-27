@@ -21,10 +21,12 @@ import java.util.ArrayList;
 @Path("/books")
 public class BookHttpInterface extends HttpInterface {
     private ObjectWriter ow;
-    private MongoCollection<Document> bookCollection = null;
+//    private MongoCollection<Document> bookCollection = null;
+
     public BookHttpInterface() {
         ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
     }
+
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
@@ -47,6 +49,7 @@ public class BookHttpInterface extends HttpInterface {
             throw handleException("POST books", e);
         }
     }
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public AppResponse getBooks(@Context HttpHeaders headers){
@@ -62,6 +65,7 @@ public class BookHttpInterface extends HttpInterface {
             throw handleException("GET /books", e);
         }
     }
+
     @GET
     @Path("/books")
     @Produces({MediaType.APPLICATION_JSON})
@@ -85,6 +89,7 @@ public class BookHttpInterface extends HttpInterface {
             throw handleException("GET /books?available=true", e);
         }
     }
+
     @GET
     @Path("/{bookId}")
     @Produces({MediaType.APPLICATION_JSON})
@@ -100,6 +105,7 @@ public class BookHttpInterface extends HttpInterface {
             throw handleException("GET /books/{bookId}", e);
         }
     }
+
     @PATCH
     @Path("/{bookId}")
     @Consumes({ MediaType.APPLICATION_JSON})
@@ -121,6 +127,7 @@ public class BookHttpInterface extends HttpInterface {
         }
         return new AppResponse("Update Successful");
     }
+
     @DELETE
     @Path("/{bookId}")
     @Consumes({ MediaType.APPLICATION_JSON })
@@ -133,4 +140,5 @@ public class BookHttpInterface extends HttpInterface {
             throw handleException("DELETE books/{bookId}", e);
         }
     }
+
 }

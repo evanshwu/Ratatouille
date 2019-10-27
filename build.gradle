@@ -17,6 +17,11 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.5'
     compile group: 'com.fasterxml.jackson.jaxrs', name: 'jackson-jaxrs-json-provider', version: '2.0.0'
     compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.23.1'
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-multipart
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: '2.25'
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.bundles.repackaged/jersey-guava
+    compile group: 'org.glassfish.jersey.bundles.repackaged', name: 'jersey-guava', version: '2.6'
+
     compile 'com.owlike:genson:1.4'
     compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.25'
     compile 'org.mongodb:mongodb-driver:3.4.0'
@@ -28,7 +33,5 @@ dependencies {
     compile group: 'javax.activation', name: 'activation', version: '1.1'
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
     compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.9.5'
-
-
 }
 

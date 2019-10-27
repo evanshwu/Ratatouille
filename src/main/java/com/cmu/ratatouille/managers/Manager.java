@@ -7,6 +7,7 @@ import com.cmu.ratatouille.utils.AppLogger;
 import com.cmu.ratatouille.utils.MongoPool;
 import org.bson.Document;
 
+
 public class Manager {
     protected MongoCollection<Document> userCollection;
     protected MongoCollection<Document> sessionCollection;
