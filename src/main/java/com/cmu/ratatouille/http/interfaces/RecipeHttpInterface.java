@@ -56,27 +56,27 @@ public class RecipeHttpInterface extends HttpInterface {
         }
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public AppResponse getRecipes(@Context HttpHeaders headers){
-        try{
-            AppLogger.info("Got an API call");
-            ArrayList<Recipe> recipes = RecipeManager.getInstance().getAllRecipes();
-
-            if(recipes != null)
-                return new AppResponse(recipes);
-            else
-                throw new HttpBadRequestException(0, "Problem with getting recipes");
-        }catch (Exception e){
-            throw handleException("GET /recipes", e);
-        }
-    }
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON})
+//    public AppResponse getRecipes(@Context HttpHeaders headers){
+//        try{
+//            AppLogger.info("Got an API call");
+//            ArrayList<Recipe> recipes = RecipeManager.getInstance().getAllRecipes();
+//
+//            if(recipes != null)
+//                return new AppResponse(recipes);
+//            else
+//                throw new HttpBadRequestException(0, "Problem with getting recipes");
+//        }catch (Exception e){
+//            throw handleException("GET /recipes", e);
+//        }
+//    }
 
 
     @GET
     @Path("/{recipeId}")
     @Produces({MediaType.APPLICATION_JSON})
-    public AppResponse getRecipes(@Context HttpHeaders headers, @PathParam("recipeId") String recipeId){
+    public AppResponse getRecipe(@Context HttpHeaders headers, @PathParam("recipeId") String recipeId){
         try{
             AppLogger.info("Got an API call");
             ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeById(recipeId);
@@ -130,33 +130,44 @@ public class RecipeHttpInterface extends HttpInterface {
         }
     }
 
-//    @GET
-//    @Consumes({ MediaType.APPLICATION_JSON })
-//    @Produces({ MediaType.APPLICATION_JSON })
-//    public AppResponse filterRecipes(@Context HttpHeaders headers,
-//                                     @QueryParam(value = "title") final ArrayList<String> ingredients,
-//                                     @QueryParam("cal") String calorie,
-//                                     @QueryParam("rating") String rating,
-//                                     @QueryParam("sortby") String sortBy,
-//                                     @QueryParam("orderby") String orderBy){
-//        try{
-//            // Process raw calorie string
-//            String calFrom = "", calTo = "";
-//            if(calorie!=null){
-//                String[] strary = calorie.split("to");
-//                calFrom = strary[0];
-//                calTo = strary[1];
-//            }
-//
-//            ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(ingredients, calFrom, calTo, rating, "5", sortBy, orderBy);
-//            if(recipes != null)
-//                return new AppResponse(recipes);
-//            else
-//                throw new HttpBadRequestException(0, "Problem with getting recipes");
-//        }catch (Exception e){
-//            throw handleException("GET recipes", e);
-//        }
-//    }
+    @GET
+    @Consumes({ MediaType.APPLICATION_JSON })
+    @Produces({ MediaType.APPLICATION_JSON })
+    public AppResponse getRecipes(@Context HttpHeaders headers,
+                                  @QueryParam("title") String ingredients,
+                                  @QueryParam("cal") String calorie,
+                                  @QueryParam("rating") String rating,
+                                  @QueryParam("sortby") String sortBy,
+                                  @QueryParam("orderby") String orderBy,
+                                  @QueryParam("offset") Integer offset,
+                                  @QueryParam("count") Integer count){
+        try{
+            ArrayList<Recipe> recipes = new ArrayList<>();
+            if((ingredients!=null || calorie!=null || rating!=null) && sortBy==null){
+                // Process raw calorie string
+                String calFrom = "", calTo = "";
+                if(calorie!=null && calorie.contains("to")){
+                    String[] strary = calorie.split("to");
+                    calFrom = strary[0];
+                    calTo = strary[1];
+                }else if(calorie!=null && !calorie.contains("to")){
+                    calFrom = calorie;
+                    calTo = Integer.MAX_VALUE+"";
+                }
+                recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(ingredients, calFrom, calTo, rating, "5", sortBy, orderBy);
+            }else{
+                // Get all
+                recipes = RecipeManager.getInstance().getAllRecipes();
+            }
+
+            if(recipes != null)
+                return new AppResponse(recipes);
+            else
+                throw new HttpBadRequestException(0, "Problem with getting recipes");
+        }catch (Exception e){
+            throw handleException("GET recipes", e);
+        }
+    }
 
 
 }

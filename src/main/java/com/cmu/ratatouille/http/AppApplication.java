@@ -1,5 +1,6 @@
 package com.cmu.ratatouille.http;
 
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 
@@ -13,6 +14,6 @@ public class AppApplication extends ResourceConfig {
     }
 
     public AppApplication() {
-
+//        this.register(MultiPartFeature.class);
     }
 }

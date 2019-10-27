@@ -155,14 +155,14 @@ public class RecipeManager extends Manager {
     }
 
     //TODO: Test required
-    public ArrayList<Recipe> getRecipeWithFiltersAndSortings(ArrayList<String> ingredients, String calFrom, String calTo, String ratingFrom, String ratingTo, String sortBy, String orderBy) throws AppException {
+    public ArrayList<Recipe> getRecipeWithFiltersAndSortings(String ingredients, String calFrom, String calTo, String ratingFrom, String ratingTo, String sortBy, String orderBy) throws AppException {
         BasicDBObject queryObject = new BasicDBObject();
         List<BasicDBObject> queryObjectList = new ArrayList<>();
         // Check ingredients
-        if(ingredients!=null && ingredients.size()>0){
-            BasicDBObject andQuery = new BasicDBObject();
-            andQuery.put("ingredient", new BasicDBObject("&in", ingredients));
-            queryObjectList.add(andQuery);
+        if(ingredients!=null){
+            BasicDBObject containsQuery = new BasicDBObject();
+            containsQuery.put("ingredient", java.util.regex.Pattern.compile(ingredients));
+            queryObjectList.add(containsQuery);
         }
         //Check calorie range
         if(calFrom!=null && calTo!=null){
@@ -210,6 +210,34 @@ public class RecipeManager extends Manager {
         }
 
         return recipeList;
+    }
+
+    public ArrayList<Recipe> getRecipeListPaginated(Integer offset, Integer count) throws AppException {
+        try{
+            ArrayList<Recipe> recipeList = new ArrayList<>();
+            BasicDBObject sortParams = new BasicDBObject();
+            sortParams.put("recipeId", OrderBy.ASC.getIntRepresentation());
+            FindIterable<Document> recipeDocs = recipeCollection.find().sort(sortParams).skip(offset).limit(count);
+            for(Document recipeDoc: recipeDocs) {
+                // Get ingredients
+                List<String> _ingredients = new ArrayList<>();
+                for(String str : recipeDoc.getString("ingredient").split(",")){
+                    _ingredients.add(str);
+                }
+                // Create recipe object
+                Recipe recipe = new Recipe(
+                        recipeDoc.getString("recipeId"),
+                        recipeDoc.getDouble("calorie"),
+                        recipeDoc.getString("image"),
+                        _ingredients,
+                        recipeDoc.getDouble("rating")
+                );
+                recipeList.add(recipe);
+            }
+            return new ArrayList<>(recipeList);
+        } catch(Exception e){
+            throw handleException("Get Recipe List", e);
+        }
     }
 
 }
