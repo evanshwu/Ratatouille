@@ -11,7 +11,17 @@ public class User {
     double height;
     double weight;
     int age;
-    Gender gender;
+    String gender;
+
+    public User(String id, String username, String email, double height, double weight, int age, String gender) {
+    this.userId = id;
+    this.username = username;
+    this.email = email;
+    this.height = height;
+    this.weight = weight;
+    this.age = age;
+    this.gender = gender;
+    }
 
     public String getUserId() {
         return userId;
@@ -77,11 +87,11 @@ public class User {
         this.age = age;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 }
