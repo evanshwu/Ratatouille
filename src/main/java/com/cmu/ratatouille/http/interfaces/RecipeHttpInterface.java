@@ -35,7 +35,7 @@ public class RecipeHttpInterface extends HttpInterface {
             json = new JSONObject(ow.writeValueAsString(request));
 
             ArrayList<String> ingredients = new ArrayList<>();
-            JSONArray ingredientArray = json.getJSONArray("ingredient");
+            JSONArray ingredientArray = json.getJSONArray("ingredients");
             System.out.println("[SIZE]"+ingredientArray.length());
             for(int i=0;i<ingredientArray.length();i++)
                 ingredients.add(ingredientArray.getString(i));

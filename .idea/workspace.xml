@@ -12,8 +12,8 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/RecipeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/RecipeManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/Recipe.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/Recipe.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/ratatouille.war" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/ratatouille.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -88,7 +88,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -195,7 +195,9 @@
       <option name="presentableId" value="Default" />
       <updated>1571706292745</updated>
       <workItem from="1571706295623" duration="5761000" />
-      <workItem from="1572153512881" duration="35206000" />
+      <workItem from="1572153512881" duration="36314000" />
+      <workItem from="1572223810129" duration="166000" />
+      <workItem from="1572223997443" duration="2646000" />
     </task>
     <task id="LOCAL-00001" summary="1. Fix param-value error&#10;2. Create object user and recipe&#10;3. Link httpinterface for recipe functions">
       <created>1572203456397</created>
@@ -232,7 +234,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572221850641</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fix ascending order does not perform issue">
+      <created>1572222743044</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1572222743044</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -260,6 +269,7 @@
     <MESSAGE value="1. Solve NullPointerException while getting sortBy nad orderBy&#10;2. Update query parameters for filtering" />
     <MESSAGE value="Create StringUtil formatter for converting String input to enum Gender type" />
     <MESSAGE value="1. Add recipeName variable for object recipe&#10;2. Fix PATCH recipe cannot be matched error&#10;3. Complete pagination, sorting, and filtering functions for recipe in RecipeManager.java&#10;4. Fix ingredient filtering feature cannot be matched error, update query parameter from &quot;title&quot; to &quot;ingredient&quot;&#10;5. Fix NullPointerException while no pagination parameter passed&#10;6. Fix calorie range getting NullPointerException while checking null value of calorie values&#10;7. Remove usage of BasicDBObject, use Bson object's Filters and Sorts instead." />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Add recipeName variable for object recipe&#10;2. Fix PATCH recipe cannot be matched error&#10;3. Complete pagination, sorting, and filtering functions for recipe in RecipeManager.java&#10;4. Fix ingredient filtering feature cannot be matched error, update query parameter from &quot;title&quot; to &quot;ingredient&quot;&#10;5. Fix NullPointerException while no pagination parameter passed&#10;6. Fix calorie range getting NullPointerException while checking null value of calorie values&#10;7. Remove usage of BasicDBObject, use Bson object's Filters and Sorts instead." />
+    <MESSAGE value="Fix ascending order does not perform issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix ascending order does not perform issue" />
   </component>
 </project>
