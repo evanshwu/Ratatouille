@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Recipe {
     String recipeId;
+    String recipeName;
     double calorie;
     String image;
     List<String> ingredients;
@@ -12,14 +13,16 @@ public class Recipe {
 
     /**
      * Constructor for creating recipe obj.
-     * @param recipeId
-     * @param calorie
-     * @param image
-     * @param ingredients
-     * @param rating
+     * @param recipeId UID for recipe, this is not the same id as mongoDB's _id
+     * @param recipeName Name of recipe
+     * @param calorie Calorie in double value
+     * @param image Url to image
+     * @param ingredients List of ingredients
+     * @param rating Rating in double value
      */
-    public Recipe(String recipeId, double calorie, String image, List<String> ingredients, double rating) {
+    public Recipe(String recipeId, String recipeName, double calorie, String image, List<String> ingredients, double rating) {
         this.recipeId = recipeId;
+        this.recipeName = recipeName;
         this.calorie = calorie;
         this.image = image;
         this.ingredients = ingredients;
@@ -64,5 +67,13 @@ public class Recipe {
 
     public void setRating(double rating) {
         this.rating = rating;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
+
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
     }
 }

@@ -16,7 +16,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
-import java.util.List;
 
 @Path("/recipes")
 
@@ -43,6 +42,7 @@ public class RecipeHttpInterface extends HttpInterface {
 
             Recipe newRecipe = new Recipe(
                     json.getString("recipeId"),
+                    json.getString("recipeName"),
                     json.getDouble("calorie"),
                     json.getString("image"),
                     ingredients,
@@ -55,23 +55,6 @@ public class RecipeHttpInterface extends HttpInterface {
             throw handleException("POST recipes", e);
         }
     }
-
-//    @GET
-//    @Produces({MediaType.APPLICATION_JSON})
-//    public AppResponse getRecipes(@Context HttpHeaders headers){
-//        try{
-//            AppLogger.info("Got an API call");
-//            ArrayList<Recipe> recipes = RecipeManager.getInstance().getAllRecipes();
-//
-//            if(recipes != null)
-//                return new AppResponse(recipes);
-//            else
-//                throw new HttpBadRequestException(0, "Problem with getting recipes");
-//        }catch (Exception e){
-//            throw handleException("GET /recipes", e);
-//        }
-//    }
-
 
     @GET
     @Path("/{recipeId}")
@@ -99,12 +82,13 @@ public class RecipeHttpInterface extends HttpInterface {
             json = new JSONObject(ow.writeValueAsString(request));
 
             ArrayList<String> ingredients = new ArrayList<>();
-            JSONArray ingredientArray = json.getJSONArray("ingredient");
+            JSONArray ingredientArray = json.getJSONArray("ingredients");
             for(int i=0;i<ingredientArray.length();i++)
                 ingredients.add(ingredientArray.getString(i));
 
             Recipe recipe = new Recipe(
                     json.getString("recipeId"),
+                    json.getString("recipeName"),
                     json.getDouble("calorie"),
                     json.getString("image"),
                     ingredients,
@@ -134,7 +118,8 @@ public class RecipeHttpInterface extends HttpInterface {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     public AppResponse getRecipes(@Context HttpHeaders headers,
-                                  @QueryParam("title") String ingredients,
+                                  @QueryParam("recipeId") String recipeId,
+                                  @QueryParam("ingredient") String ingredients,
                                   @QueryParam("calorie") String calorie,
                                   @QueryParam("rating") String rating,
                                   @QueryParam("sortby") String sortBy,
@@ -143,7 +128,9 @@ public class RecipeHttpInterface extends HttpInterface {
                                   @QueryParam("count") Integer count){
         try{
             ArrayList<Recipe> recipes = new ArrayList<>();
-            if((ingredients!=null || calorie!=null || rating!=null) && sortBy==null){
+            if(recipeId!=null){
+                recipes = RecipeManager.getInstance().getRecipeById(recipeId);
+            }else if(ingredients!=null || calorie!=null || rating!=null){
                 // Process raw calorie string
                 String calFrom = "", calTo = "";
                 if(calorie!=null && calorie.contains("to")){
@@ -155,6 +142,8 @@ public class RecipeHttpInterface extends HttpInterface {
                     calTo = Integer.MAX_VALUE+"";
                 }
                 recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(ingredients, calFrom, calTo, rating, sortBy, orderBy);
+            }else if(offset!=null && count!=null){
+                recipes = RecipeManager.getInstance().getRecipeListPaginated(offset, count);
             }else{
                 // Get all
                 recipes = RecipeManager.getInstance().getAllRecipes();
