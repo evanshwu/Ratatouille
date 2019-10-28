@@ -82,7 +82,7 @@ import java.util.Comparator;
 
     }*/
 
-    @GET
+    /*@GET
     @Path("/{username}")
     @Produces({MediaType.APPLICATION_JSON})
     public AppResponse getSingleUser(@Context HttpHeaders headers, @PathParam("username") String username) {
@@ -98,18 +98,17 @@ import java.util.Comparator;
         } catch (Exception e) {
             throw handleException("GET /users/{username}", e);
         }
-
-
-    }
+    }*/
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public AppResponse getsortUser(@Context HttpHeaders headers,
                                    @QueryParam("sortby") String sortBy,
                                    @QueryParam("pagesize") Integer pageSize,
-                                   @QueryParam("page") Integer page) {
+                                   @QueryParam("page") Integer page,
+                                   @QueryParam("name") String name) {
         AppLogger.info("[getsortUser]" + sortBy);
-        if (sortBy == null && pageSize == null && page == null) {
+        if (sortBy == null && pageSize == null && page == null&&name==null) {
             try {
                 AppLogger.info("Got an API call");
                 ArrayList<User> users = UserManager.getInstance().getUserList();
@@ -153,7 +152,7 @@ import java.util.Comparator;
             } catch (Exception e) {
                 throw handleException("GET /users?sortby={username}", e);
             }
-        } else{
+        } else if(sortBy==null&&page!=null&&pageSize!=null){
             try {
                 AppLogger.info("hello");
                 FindIterable<Document> userDocs = MongoPool.getInstance().getCollection("users").find().skip(pageSize * (page - 1)).limit(pageSize);
@@ -181,14 +180,26 @@ import java.util.Comparator;
                 throw handleException("GET /users?sortby={username}", e);
             }
         }
+        else{
+            try {
+                AppLogger.info("Got an API call");
+                ArrayList<User> users = UserManager.getInstance().getUserById(name);
+
+                if (users != null)
+                    return new AppResponse(users);
+                else
+                    throw new HttpBadRequestException(0, "Problem with getting users");
+            } catch (Exception e) {
+                throw handleException("GET /users/{username}", e);
+            }
+        }
     }
 
 
  @PATCH
- @Path("/{username}")
  @Consumes({ MediaType.APPLICATION_JSON})
  @Produces({ MediaType.APPLICATION_JSON})
- public AppResponse patchUsers(Object request, @PathParam("username") String username){
+ public AppResponse patchUsers(Object request, @QueryParam("name") String name){
     JSONObject json = null;
     try{
         json = new JSONObject(ow.writeValueAsString(request));
@@ -215,10 +226,10 @@ import java.util.Comparator;
 
 
  @DELETE
- @Path("/{username}")
+
  @Consumes({ MediaType.APPLICATION_JSON })
  @Produces({ MediaType.APPLICATION_JSON })
- public AppResponse deleteUsers(@PathParam("username") String username){
+ public AppResponse deleteUsers(@QueryParam("name") String username){
 
     try{
         UserManager.getInstance().deleteUser( username);
