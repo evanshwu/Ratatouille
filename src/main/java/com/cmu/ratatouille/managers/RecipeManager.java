@@ -197,7 +197,7 @@ public class RecipeManager extends Manager {
 
         if(orderBy!=null && sortBy!=null && !orderBy.equals("") && !sortBy.equals("")) {
             AppLogger.info("[getRecipeWithFiltersAndSortings] Got sorting: sortBy="+sortBy+", orderBy="+orderBy);
-            if(orderBy.toLowerCase().equals("acs"))
+            if(orderBy.toLowerCase().equals("asc"))
                 recipeDocs = recipeDocs.sort(Sorts.ascending(sortBy));
             else
                 recipeDocs = recipeDocs.sort(Sorts.descending(sortBy));
