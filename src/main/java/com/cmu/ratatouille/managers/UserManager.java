@@ -88,7 +88,9 @@ public class UserManager extends Manager {
         try{
             ArrayList<User> userList = new ArrayList<>();
             FindIterable<Document> userDocs = userCollection.find();
+            System.out.println();
             for(Document userDoc: userDocs) {
+                System.out.println(userDoc.toJson());
                 User user = new User(
                         userDoc.getObjectId("_id").toString(),
                         userDoc.getString("username"),
