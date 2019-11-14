@@ -3,30 +3,31 @@ package com.cmu.ratatouille.models;
 import java.util.ArrayList;
 
 public class Conversation {
-    public String id;
-    public String userId;
+    public _id _id;
+    public String userName;
     public ArrayList<Message> messages;
 
-    public Conversation(String id, String userId, ArrayList<Message> messages) {
-        this.id = id;
-        this.userId = userId;
+    public Conversation(String _id, String userName, ArrayList<Message> messages) {
+        this.userName = userName;
         this.messages = messages;
     }
 
-    public String getId() {
-        return id;
+    public String get_id() {
+        return _id.get$Oid();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void set_id(String _id) {
+        _id _id_ = new _id();
+        _id_.set$Oid(_id);
+        this._id = _id_;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public ArrayList<Message> getMessages() {

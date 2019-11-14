@@ -2,7 +2,7 @@ package com.cmu.ratatouille.utils;
 
 import com.cmu.ratatouille.models.Gender;
 
-public class calorieMultiplier {
+public class CalorieMultiplier {
 
     /*
 Sedentary : little or no exercise = bmr * 1.2
@@ -37,8 +37,8 @@ Extra active: very intense exercise daily, or physical job = bmr * 1.9
         return result;
     }
 
-    public static double getBMR(Gender gender, int weight, int height, int age){
-        if(gender.equals(Gender.MALE))
+    public static double getBMR(String gender, int weight, int height, int age){
+        if(gender.equals("male"))
             return 10*weight + 6.25*height - 5*age + 5;
         return 10*weight + 6.25*height - 5*age - 161;
     }
