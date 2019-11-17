@@ -1,5 +1,6 @@
 package com.cmu.ratatouille.managers;
 
+import com.cmu.ratatouille.http.utils.StringUtil;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.cmu.ratatouille.exceptions.AppException;
@@ -29,95 +30,106 @@ public class UserManager extends Manager {
     }
 
 
-//    public void createUser(User user) throws AppException {
-//
-//        try{
-//            JSONObject json = new JSONObject(user);
-//
-//            Document newDoc = new Document()
-//                    .append("username", user.getUsername())
-//                    .append("password", user.getPassword())
-//                    .append("email",user.getEmail());
-//            if (newDoc != null)
-//                userCollection.insertOne(newDoc);
-//            else
-//                throw new AppInternalServerException(0, "Failed to create new user");
-//
-//        }catch(Exception e){
-//            throw handleException("Create User", e);
-//        }
-//
-//    }
-//
-//    public void updateUser( User user) throws AppException {
-//        try {
-//
-//
-//            Bson filter = new Document("_id", new ObjectId(user.getId()));
-//            Bson newValue = new Document()
-//                    .append("username", user.getUsername())
-//                    .append("password", user.getPassword())
-//                    .append("email",user.getEmail());
-//            Bson updateOperationDocument = new Document("$set", newValue);
-//
-//            if (newValue != null)
-//                userCollection.updateOne(filter, updateOperationDocument);
-//            else
-//                throw new AppInternalServerException(0, "Failed to update user details");
-//
-//        } catch(Exception e) {
-//            throw handleException("Update User", e);
-//        }
-//    }
-//
-//    public void deleteUser(String userId) throws AppException {
-//        try {
-//            Bson filter = new Document("_id", new ObjectId(userId));
-//            userCollection.deleteOne(filter);
-//        }catch (Exception e){
-//            throw handleException("Delete User", e);
-//        }
-//    }
-//
-//    public ArrayList<User> getUserList() throws AppException {
-//        try{
-//            ArrayList<User> userList = new ArrayList<>();
-//            FindIterable<Document> userDocs = userCollection.find();
-//            for(Document userDoc: userDocs) {
-//                User user = new User(
-//                        userDoc.getObjectId("_id").toString(),
-//                        userDoc.getString("username"),
-//                        userDoc.getString("password"),
-//                        userDoc.getString("email")
-//                        );
-//                userList.add(user);
-//            }
-//            return new ArrayList<>(userList);
-//        } catch(Exception e){
-//            throw handleException("Get User List", e);
-//        }
-//    }
-//
-//    public ArrayList<User> getUserById(String id) throws AppException {
-//        try{
-//            ArrayList<User> userList = new ArrayList<>();
-//            FindIterable<Document> userDocs = userCollection.find();
-//            for(Document userDoc: userDocs) {
-//                if(userDoc.getObjectId("_id").toString().equals(id)) {
-//                    User user = new User(
-//                            userDoc.getObjectId("_id").toString(),
-//                            userDoc.getString("username"),
-//                            userDoc.getString("password"),
-//                            userDoc.getString("email")
-//                    );
-//                    userList.add(user);
-//                }
-//            }
-//            return new ArrayList<>(userList);
-//        } catch(Exception e){
-//            throw handleException("Get User List", e);
-//        }
-//    }
+    public void createUser(User user) throws AppException {
+
+        try{
+            JSONObject json = new JSONObject(user);
+
+            Document newDoc = new Document()
+                    .append("username", user.getUsername())
+                    .append("email",user.getEmail())
+                    .append("height", user.getHeight())
+                    .append("weight", user.getWeight())
+                    .append("age", user.getAge())
+                    .append("password", user.getGender());
+            if (newDoc != null)
+                userCollection.insertOne(newDoc);
+            else
+                throw new AppInternalServerException(0, "Failed to create new user");
+
+        }catch(Exception e){
+            throw handleException("Create User", e);
+        }
+
+    }
+
+    public void updateUser( User user) throws AppException {
+        try {
+            Bson filter = new Document("username", user.getUsername());
+            Bson newValue = new Document()
+                    .append("username", user.getUsername())
+                    .append("email",user.getEmail())
+                    .append("height", user.getHeight())
+                    .append("weight", user.getWeight())
+                    .append("age", user.getAge())
+                    .append("password", user.getGender());
+            Bson updateOperationDocument = new Document("$set", newValue);
+
+            if (newValue != null)
+                userCollection.updateOne(filter, updateOperationDocument);
+            else
+                throw new AppInternalServerException(0, "Failed to update user details");
+
+        } catch(Exception e) {
+            throw handleException("Update User", e);
+        }
+    }
+
+    public void deleteUser(String username) throws AppException {
+        try {
+            Bson filter = new Document("username", username);
+            userCollection.deleteOne(filter);
+        }catch (Exception e){
+            throw handleException("Delete User", e);
+        }
+    }
+
+    public ArrayList<User> getUserList() throws AppException {
+        try{
+            ArrayList<User> userList = new ArrayList<>();
+            FindIterable<Document> userDocs = userCollection.find();
+            System.out.println();
+            for(Document userDoc: userDocs) {
+                User user = new User(
+                        userDoc.getObjectId("_id").toString(),
+                        userDoc.getString("username"),
+                        userDoc.getString("email"),
+                        userDoc.getDouble("height"),
+                        userDoc.getDouble("weight"),
+                        userDoc.getInteger("age"),
+                        userDoc.getString("gender")
+                );
+                userList.add(user);
+            }
+            return new ArrayList<>(userList);
+        } catch(Exception e){
+            throw handleException("Get User List", e);
+        }
+    }
+
+    public ArrayList<User> getUserById(String username) throws AppException {
+        try{
+            ArrayList<User> userList = new ArrayList<>();
+            FindIterable<Document> userDocs = userCollection.find();
+            for(Document userDoc: userDocs) {
+                if(userDoc.getString("username").equals(username)) {
+                    User user = new User(
+                            userDoc.getObjectId("_id").toString(),
+                            userDoc.getString("username"),
+                            userDoc.getString("email"),
+                            userDoc.getDouble("height"),
+                            userDoc.getDouble("weight"),
+                            userDoc.getInteger("age"),
+                            userDoc.getString("gender")
+                    );
+                    userList.add(user);
+                }
+            }
+            return new ArrayList<>(userList);
+        } catch(Exception e){
+            throw handleException("Get User List", e);
+        }
+    }
 
 
 }

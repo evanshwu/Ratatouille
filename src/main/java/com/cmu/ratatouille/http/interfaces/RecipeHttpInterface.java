@@ -8,6 +8,7 @@ import com.cmu.ratatouille.models.Recipe;
 import com.cmu.ratatouille.utils.AppLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,20 +35,20 @@ public class RecipeHttpInterface extends HttpInterface {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
 
-            ArrayList<String> ingredients = new ArrayList<>();
-            JSONArray ingredientArray = json.getJSONArray("ingredients");
-            System.out.println("[SIZE]"+ingredientArray.length());
-            for(int i=0;i<ingredientArray.length();i++)
-                ingredients.add(ingredientArray.getString(i));
-
-            Recipe newRecipe = new Recipe(
-                    json.getString("recipeId"),
-                    json.getString("recipeName"),
-                    json.getDouble("calorie"),
-                    json.getString("image"),
-                    ingredients,
-                    json.getDouble("rating")
-            );
+//            ArrayList<String> ingredients = new ArrayList<>();
+//            JSONArray ingredientArray = json.getJSONArray("ingredients");
+//            System.out.println("[SIZE]"+ingredientArray.length());
+//            for(int i=0;i<ingredientArray.length();i++)
+//                ingredients.add(ingredientArray.getString(i));
+//
+//            Recipe newRecipe = new Recipe(
+//                    json.getString("recipeId"),
+//                    json.getString("recipeName"),
+//                    json.getDouble("calorie"),
+//                    json.getString("image"),
+//                    ingredients
+//            );
+            Recipe newRecipe = new Gson().fromJson(json.toString(), Recipe.class);
             RecipeManager.getInstance().createRecipe(newRecipe);
             return new AppResponse("Insert Successful");
 
@@ -81,19 +82,19 @@ public class RecipeHttpInterface extends HttpInterface {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
 
-            ArrayList<String> ingredients = new ArrayList<>();
-            JSONArray ingredientArray = json.getJSONArray("ingredients");
-            for(int i=0;i<ingredientArray.length();i++)
-                ingredients.add(ingredientArray.getString(i));
-
-            Recipe recipe = new Recipe(
-                    json.getString("recipeId"),
-                    json.getString("recipeName"),
-                    json.getDouble("calorie"),
-                    json.getString("image"),
-                    ingredients,
-                    json.getDouble("rating")
-            );
+//            ArrayList<String> ingredients = new ArrayList<>();
+//            JSONArray ingredientArray = json.getJSONArray("ingredients");
+//            for(int i=0;i<ingredientArray.length();i++)
+//                ingredients.add(ingredientArray.getString(i));
+//
+//            Recipe recipe = new Recipe(
+//                    json.getString("recipeId"),
+//                    json.getString("recipeName"),
+//                    json.getDouble("calorie"),
+//                    json.getString("image"),
+//                    ingredients
+//            );
+            Recipe recipe = new Gson().fromJson(json.toString(), Recipe.class);
             RecipeManager.getInstance().updateRecipe(recipe);
         }catch (Exception e){
             throw handleException("PATCH recipes/{recipeId}", e);
@@ -155,6 +156,25 @@ public class RecipeHttpInterface extends HttpInterface {
                 throw new HttpBadRequestException(0, "Problem with getting recipes");
         }catch (Exception e){
             throw handleException("GET recipes", e);
+        }
+    }
+
+    @POST
+    @Path("/rate/{recipeId}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public AppResponse postRatings(Object request, @PathParam("recipeId") String recipeId) {
+        try {
+            JSONObject json = null;
+            json = new JSONObject(ow.writeValueAsString(request));
+
+            Double rating = json.getDouble("rating");
+
+            RecipeManager.getInstance().submitRating(recipeId, rating);
+            return new AppResponse("Insert Successful");
+
+        } catch (Exception e) {
+            throw handleException("POST recipes", e);
         }
     }
 

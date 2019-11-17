@@ -5,6 +5,7 @@ import com.cmu.ratatouille.exceptions.AppInternalServerException;
 import com.cmu.ratatouille.models.Recipe;
 import com.cmu.ratatouille.utils.AppLogger;
 import com.cmu.ratatouille.utils.MongoPool;
+import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -33,19 +34,20 @@ public class RecipeManager extends Manager {
 
     public void createRecipe(Recipe recipe) throws AppException {
         try{
-            StringBuilder ingredients = new StringBuilder();
-            for(String ingredient : recipe.getIngredients()) {
-                ingredients.append(ingredient);
-                ingredients.append(",");
-            }
-
-            Document newRecipe = new Document()
-                    // TODO: Create UID generator
-                    .append("recipeId", recipe.getRecipeId())
-                    .append("calorie", recipe.getCalorie())
-                    .append("rating", recipe.getRating())
-                    .append("image", recipe.getImage())
-                    .append("ingredient", ingredients.toString());
+//            StringBuilder ingredients = new StringBuilder();
+//            for(String ingredient : recipe.getIngredients()) {
+//                ingredients.append(ingredient);
+//                ingredients.append(",");
+//            }
+//
+//            Document newRecipe = new Document()
+//                    // TODO: Create UID generator
+//                    .append("recipeId", recipe.getRecipeId())
+//                    .append("calorie", recipe.getCalorie())
+//                    .append("rating", 0)
+//                    .append("image", recipe.getImage())
+//                    .append("ingredient", ingredients.toString());
+            Document newRecipe = Document.parse(new Gson().toJson(recipe));
             if (newRecipe != null){
                 recipeCollection.insertOne(newRecipe);
                 AppLogger.info("Insert new recipe _id="+newRecipe.get("_id").toString());
@@ -59,19 +61,20 @@ public class RecipeManager extends Manager {
     public void updateRecipe(Recipe recipe) throws AppException {
         try {
             Bson filter = new Document("recipeId", recipe.getRecipeId());
-            StringBuilder ingredients = new StringBuilder();
-            for(String ingredient : recipe.getIngredients()) {
-                ingredients.append(ingredient);
-                ingredients.append(",");
-            }
+//            StringBuilder ingredients = new StringBuilder();
+//            for(String ingredient : recipe.getIngredients()) {
+//                ingredients.append(ingredient);
+//                ingredients.append(",");
+//            }
 
-            Document newRecipe = new Document()
-                    .append("recipeId", recipe.getRecipeId())
-                    .append("recipeName", recipe.getRecipeName())
-                    .append("calorie", recipe.getCalorie())
-                    .append("rating", recipe.getRating())
-                    .append("image", recipe.getImage())
-                    .append("ingredient", ingredients.toString());
+            Document newRecipe = Document.parse(new Gson().toJson(recipe));
+//            Document newRecipe = new Document()
+//                    .append("recipeId", recipe.getRecipeId())
+//                    .append("recipeName", recipe.getRecipeName())
+//                    .append("calorie", recipe.getCalorie())
+//                    .append("rating", recipe.getRating())
+//                    .append("image", recipe.getImage())
+//                    .append("ingredient", ingredients.toString());
             Bson updateOperationDocument = new Document("$set", newRecipe);
 
             if (newRecipe != null)
@@ -98,20 +101,20 @@ public class RecipeManager extends Manager {
             FindIterable<Document> recipeDocs = recipeCollection.find();
             for(Document recipeDoc: recipeDocs) {
                 // Get ingredients
-                System.out.println("[EVANSHWU]"+recipeDoc.get("ingredient").toString());
-                List<String> ingredients = new ArrayList<>();
-                for(String str : recipeDoc.getString("ingredient").split(",")){
-                    ingredients.add(str);
-                }
-                // Create recipe object
-                Recipe recipe = new Recipe(
-                        recipeDoc.getString("recipeId"),
-                        recipeDoc.getString("recipeName"),
-                        recipeDoc.getDouble("calorie"),
-                        recipeDoc.getString("image"),
-                        ingredients,
-                        recipeDoc.getDouble("rating")
-                );
+//                System.out.println("[EVANSHWU]"+recipeDoc.get("ingredient").toString());
+//                List<String> ingredients = new ArrayList<>();
+//                for(String str : recipeDoc.getString("ingredient").split(",")){
+//                    ingredients.add(str);
+//                }
+//                // Create recipe object
+//                Recipe recipe = new Recipe(
+//                        recipeDoc.getString("recipeId"),
+//                        recipeDoc.getString("recipeName"),
+//                        recipeDoc.getDouble("calorie"),
+//                        recipeDoc.getString("image"),
+//                        ingredients
+//                );
+                Recipe recipe = new Gson().fromJson(recipeDoc.toJson(), Recipe.class);
                 // Add to list
                 recipes.add(recipe);
             }
@@ -129,20 +132,20 @@ public class RecipeManager extends Manager {
             for(Document recipeDoc: recipeDocs) {
                 if(recipeDoc.getString("recipeId").equals(id)) {
                     // Get ingredients
-                    System.out.println("[EVANSHWU]"+recipeDoc.get("ingredient").toString());
-                    List<String> ingredients = new ArrayList<>();
-                    for(String str : recipeDoc.getString("ingredient").split(",")){
-                        ingredients.add(str);
-                    }
-                    // Create recipe object
-                    Recipe recipe = new Recipe(
-                            recipeDoc.getString("recipeId"),
-                            recipeDoc.getString("recipeName"),
-                            recipeDoc.getDouble("calorie"),
-                            recipeDoc.getString("image"),
-                            ingredients,
-                            recipeDoc.getDouble("rating")
-                    );
+//                    System.out.println("[EVANSHWU]"+recipeDoc.get("ingredient").toString());
+//                    List<String> ingredients = new ArrayList<>();
+//                    for(String str : recipeDoc.getString("ingredient").split(",")){
+//                        ingredients.add(str);
+//                    }
+//                    // Create recipe object
+//                    Recipe recipe = new Recipe(
+//                            recipeDoc.getString("recipeId"),
+//                            recipeDoc.getString("recipeName"),
+//                            recipeDoc.getDouble("calorie"),
+//                            recipeDoc.getString("image"),
+//                            ingredients
+//                    );
+                    Recipe recipe = new Gson().fromJson(recipeDoc.toJson(), Recipe.class);
                     recipeList.add(recipe);
                 }
             }
@@ -206,20 +209,21 @@ public class RecipeManager extends Manager {
         ArrayList<Recipe> recipeList = new ArrayList<>();
         for(Document recipeDoc: recipeDocs) {
             // Get ingredients
-            System.out.println("[EVANSHWU]"+recipeDoc.get("ingredient").toString());
-            List<String> _ingredients = new ArrayList<>();
-            for(String str : recipeDoc.getString("ingredient").split(",")){
-                _ingredients.add(str);
-            }
-            // Create recipe object
-            Recipe recipe = new Recipe(
-                    recipeDoc.getString("recipeId"),
-                    recipeDoc.getString("recipeName"),
-                    recipeDoc.getDouble("calorie"),
-                    recipeDoc.getString("image"),
-                    _ingredients,
-                    recipeDoc.getDouble("rating")
-            );
+//            System.out.println("[EVANSHWU]"+recipeDoc.get("ingredient").toString());
+//            List<String> _ingredients = new ArrayList<>();
+//            for(String str : recipeDoc.getString("ingredient").split(",")){
+//                _ingredients.add(str);
+//            }
+//            // Create recipe object
+//            Recipe recipe = new Recipe(
+//                    recipeDoc.getString("recipeId"),
+//                    recipeDoc.getString("recipeName"),
+//                    recipeDoc.getDouble("calorie"),
+//                    recipeDoc.getString("image"),
+//                    _ingredients
+//            );
+            Recipe recipe = new Gson().fromJson(recipeDoc.toJson(), Recipe.class);
+            recipe.setRating(recipeDoc.getDouble("rating"));
             // Add to list
             recipeList.add(recipe);
         }
@@ -234,25 +238,43 @@ public class RecipeManager extends Manager {
             sortParams.put("recipeId", OrderBy.ASC.getIntRepresentation());
             FindIterable<Document> recipeDocs = recipeCollection.find().sort(sortParams).skip(offset).limit(count);
             for(Document recipeDoc: recipeDocs) {
-                // Get ingredients
-                List<String> _ingredients = new ArrayList<>();
-                for(String str : recipeDoc.getString("ingredient").split(",")){
-                    _ingredients.add(str);
-                }
-                // Create recipe object
-                Recipe recipe = new Recipe(
-                        recipeDoc.getString("recipeId"),
-                        recipeDoc.getString("recipeName"),
-                        recipeDoc.getDouble("calorie"),
-                        recipeDoc.getString("image"),
-                        _ingredients,
-                        recipeDoc.getDouble("rating")
-                );
+//                // Get ingredients
+//                List<String> _ingredients = new ArrayList<>();
+//                for(String str : recipeDoc.getString("ingredient").split(",")){
+//                    _ingredients.add(str);
+//                }
+//                // Create recipe object
+//                Recipe recipe = new Recipe(
+//                        recipeDoc.getString("recipeId"),
+//                        recipeDoc.getString("recipeName"),
+//                        recipeDoc.getDouble("calorie"),
+//                        recipeDoc.getString("image"),
+//                        _ingredients
+//                );
+                Recipe recipe = new Gson().fromJson(recipeDoc.toJson(), Recipe.class);
                 recipeList.add(recipe);
             }
             return new ArrayList<>(recipeList);
         } catch(Exception e){
             throw handleException("Get Recipe List", e);
+        }
+    }
+
+    public void submitRating(String recipeId, double rating) throws AppException{
+        try{
+            ArrayList<Recipe> recipes = this.getRecipeById(recipeId);
+            System.out.println("Got recipe" + recipes.get(0).getRecipeId());
+            if(recipes.size()>0){
+                Recipe recipe = recipes.get(0);
+                double newRate = (recipe.getRating() * recipe.rater + rating) / (recipe.rater+1);
+                recipe.setRating(newRate);
+                recipe.rater += 1;
+                this.updateRecipe(recipe);
+                return;
+            }
+            throw new AppInternalServerException(0, "Failed to submit rate");
+        }catch(Exception e){
+            throw handleException("Submit rating", e);
         }
     }
 

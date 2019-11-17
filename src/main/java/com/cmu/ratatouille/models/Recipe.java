@@ -8,8 +8,9 @@ public class Recipe {
     String recipeName;
     double calorie;
     String image;
-    List<String> ingredients;
+    List<Ingredient> ingredients;
     double rating;
+    public int rater;
 
     /**
      * Constructor for creating recipe obj.
@@ -18,15 +19,13 @@ public class Recipe {
      * @param calorie Calorie in double value
      * @param image Url to image
      * @param ingredients List of ingredients
-     * @param rating Rating in double value
      */
-    public Recipe(String recipeId, String recipeName, double calorie, String image, List<String> ingredients, double rating) {
+    public Recipe(String recipeId, String recipeName, double calorie, String image, List<Ingredient> ingredients) {
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.calorie = calorie;
         this.image = image;
         this.ingredients = ingredients;
-        this.rating = rating;
     }
 
     public String getRecipeId() {
@@ -53,11 +52,11 @@ public class Recipe {
         this.image = image;
     }
 
-    public List<String> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<String> ingredients) {
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
