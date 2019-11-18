@@ -63,43 +63,6 @@ import java.util.Comparator;
         }
     }
 
-    /*@GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public AppResponse getUsers(@Context HttpHeaders headers) {
-
-        try {
-            AppLogger.info("Got an API call");
-            ArrayList<User> users = UserManager.getInstance().getUserList();
-
-            if (users != null)
-                return new AppResponse(users);
-            else
-                throw new HttpBadRequestException(0, "Problem with getting users");
-        } catch (Exception e) {
-            throw handleException("GET /users", e);
-        }
-
-
-    }*/
-
-    /*@GET
-    @Path("/{username}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public AppResponse getSingleUser(@Context HttpHeaders headers, @PathParam("username") String username) {
-
-        try {
-            AppLogger.info("Got an API call");
-            ArrayList<User> users = UserManager.getInstance().getUserById(username);
-
-            if (users != null)
-                return new AppResponse(users);
-            else
-                throw new HttpBadRequestException(0, "Problem with getting users");
-        } catch (Exception e) {
-            throw handleException("GET /users/{username}", e);
-        }
-    }*/
-
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public AppResponse getsortUser(@Context HttpHeaders headers,
@@ -141,7 +104,6 @@ import java.util.Comparator;
                             userDoc.getString("gender")
                     );
                     userList.add(user);
-
                     //}
                 }
                 if (userList != null)
@@ -221,9 +183,6 @@ import java.util.Comparator;
 
  return new AppResponse("Update Successful");
  }
-
-
-
 
  @DELETE
 

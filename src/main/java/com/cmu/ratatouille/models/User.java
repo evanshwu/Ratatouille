@@ -1,6 +1,8 @@
 package com.cmu.ratatouille.models;
 
 
+import java.util.ArrayList;
+
 public class User {
     String userId;
     String username;
@@ -12,6 +14,8 @@ public class User {
     double weight;
     int age;
     String gender;
+    ArrayList<String> type;
+    ArrayList<String> exercise_frequency;
 
     public User(String id, String username, String email, double height, double weight, int age, String gender) {
     this.userId = id;
@@ -93,5 +97,29 @@ public class User {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+    public ArrayList<String> getType() {
+        return type;
+    }
+
+    public void setType(ArrayList<String> type) {
+        type.add(0,"Mantain weight");
+        type.add(1,"Slight loss weight");
+        type.add(2,"Loss weight");
+        type.add(3,"Extreme loss weight");
+        this.type = type;
+    }
+    public ArrayList<String> getExercise_frequency() {
+        return exercise_frequency;
+    }
+
+    public void setExercise_frequency(ArrayList<String> exercise_frequency) {
+        exercise_frequency.add(0,"Sedentary: little or no exercise");
+        exercise_frequency.add(1,"Exercise 1-3 times/week");
+        exercise_frequency.add(2,"Exercise 4-5 times/week");
+        exercise_frequency.add(3,"Daily exercise or intense exercise 3-4 times/week");
+        exercise_frequency.add(4,"Intense exercise 6-7 times/week");
+        exercise_frequency.add(5,"Very intense exercise daily, or physical job");
+        this.exercise_frequency = exercise_frequency;
     }
 }
