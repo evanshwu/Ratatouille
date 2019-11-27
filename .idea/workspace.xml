@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
+=======
+    <list default="true" id="d69a6060-2343-4d09-bf99-85957d848e98" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/UserHttpInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/UserHttpInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/UserManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/UserManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/FavoriteList.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/FavoriteList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/WishList.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/WishList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/ratatouille.war" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/ratatouille.war" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/RecipeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/RecipeManager.java" afterDir="false" />
+    </list>
+>>>>>>> Stashed changes
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,6 +204,17 @@
       <workItem from="1572153512881" duration="36314000" />
       <workItem from="1572223810129" duration="166000" />
       <workItem from="1572223997443" duration="2646000" />
+<<<<<<< Updated upstream
+=======
+      <workItem from="1573490098496" duration="402000" />
+      <workItem from="1573516232859" duration="5860000" />
+      <workItem from="1573595313389" duration="88000" />
+      <workItem from="1573680587376" duration="13083000" />
+      <workItem from="1574022848920" duration="10042000" />
+      <workItem from="1574135412148" duration="1124000" />
+      <workItem from="1574752933657" duration="758000" />
+      <workItem from="1574792779730" duration="6637000" />
+>>>>>>> Stashed changes
     </task>
     <task id="LOCAL-00001" summary="1. Fix param-value error&#10;2. Create object user and recipe&#10;3. Link httpinterface for recipe functions">
       <created>1572203456397</created>

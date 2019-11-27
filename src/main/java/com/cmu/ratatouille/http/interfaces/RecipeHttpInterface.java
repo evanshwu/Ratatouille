@@ -9,7 +9,6 @@ import com.cmu.ratatouille.utils.AppLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.Gson;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
@@ -178,5 +177,23 @@ public class RecipeHttpInterface extends HttpInterface {
         }
     }
 
+    @GET
+    @Path("/insert")
+    @Produces({MediaType.APPLICATION_JSON})
+    public AppResponse insertRecipe(@Context HttpHeaders headers,
+                                    @QueryParam("query") String query,
+                                    @QueryParam("from") int indexFrom,
+                                    @QueryParam("to") int indexTo){
+        try{
+            AppLogger.info("Got an API call");
+            ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeById(recipeId);
+            if(recipes != null)
+                return new AppResponse(recipes);
+            else
+                throw new HttpBadRequestException(0, "Problem with getting recipes");
+        }catch (Exception e){
+            throw handleException("GET /recipes/{recipeId}", e);
+        }
+    }
 
 }

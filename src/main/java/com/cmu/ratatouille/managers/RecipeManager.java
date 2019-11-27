@@ -47,6 +47,7 @@ public class RecipeManager extends Manager {
 //                    .append("rating", 0)
 //                    .append("image", recipe.getImage())
 //                    .append("ingredient", ingredients.toString());
+            int count = CounterManager.getInstance().getCounter().getRecipeId();
             Document newRecipe = Document.parse(new Gson().toJson(recipe));
             if (newRecipe != null){
                 recipeCollection.insertOne(newRecipe);
@@ -275,6 +276,14 @@ public class RecipeManager extends Manager {
             throw new AppInternalServerException(0, "Failed to submit rate");
         }catch(Exception e){
             throw handleException("Submit rating", e);
+        }
+    }
+
+    public void insertRecipe(String query, int from, int to) throws AppException{
+        try{
+            
+        }catch (Exception ex){
+            throw handleException("Error inserting recipes to DB!", ex);
         }
     }
 
