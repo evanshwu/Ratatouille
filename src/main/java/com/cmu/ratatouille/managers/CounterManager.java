@@ -20,7 +20,7 @@ public class CounterManager extends Manager {
 
     public static CounterManager getInstance(){
         if (_self == null)
-            _self = new CounterManager();j
+            _self = new CounterManager();
         return _self;
     }
 
@@ -30,7 +30,7 @@ public class CounterManager extends Manager {
             Counter counter = this.getCounter();
             counter.setRecipeId(newIndex);
             Document newCounter = Document.parse(new Gson().toJson(counter));
-            Bson filter = new Document("recipeId", newIndex);
+            Bson filter = new Document("func", "counter");
             Bson updateOperationDocument = new Document("$set", newCounter);
 
             if (newCounter != null)
@@ -49,6 +49,16 @@ public class CounterManager extends Manager {
             return counter;
         }catch(Exception e){
             throw handleException("Error getting counter object!", e);
+        }
+    }
+
+    public int pushCount() throws AppException{
+        try{
+            Counter counter = getCounter();
+            setRecipeCount(counter.getRecipeId()+1);
+            return counter.getRecipeId()+1;
+        }catch (Exception ex){
+            throw handleException("Error adding counter value!", ex);
         }
     }
 }

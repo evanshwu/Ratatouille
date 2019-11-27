@@ -185,14 +185,10 @@ public class RecipeHttpInterface extends HttpInterface {
                                     @QueryParam("from") int indexFrom,
                                     @QueryParam("to") int indexTo){
         try{
-            AppLogger.info("Got an API call");
-            ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeById(recipeId);
-            if(recipes != null)
-                return new AppResponse(recipes);
-            else
-                throw new HttpBadRequestException(0, "Problem with getting recipes");
+            RecipeManager.getInstance().insertRecipe(query, indexFrom, indexTo);
+            return new AppResponse("Insert successful");
         }catch (Exception e){
-            throw handleException("GET /recipes/{recipeId}", e);
+            throw handleException("GET /insert", e);
         }
     }
 

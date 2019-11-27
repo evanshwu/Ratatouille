@@ -1,13 +1,13 @@
 package com.cmu.ratatouille.models;
 
 public class Ingredient {
-    public String name;
+    public String text;
 
-    public String getName() {
-        return name;
+    public String geText() {
+        return text;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setText(String text) {
+        this.text = text;
     }
 }

@@ -2,7 +2,10 @@ package com.cmu.ratatouille.managers;
 
 import com.cmu.ratatouille.exceptions.AppException;
 import com.cmu.ratatouille.exceptions.AppInternalServerException;
+import com.cmu.ratatouille.models.Hit;
 import com.cmu.ratatouille.models.Recipe;
+import com.cmu.ratatouille.models.RecipeFromApi;
+import com.cmu.ratatouille.models.RecipeQueryRes;
 import com.cmu.ratatouille.utils.AppLogger;
 import com.cmu.ratatouille.utils.MongoPool;
 import com.google.gson.Gson;
@@ -15,8 +18,12 @@ import com.mongodb.operation.OrderBy;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class RecipeManager extends Manager {
     public static RecipeManager _self;
@@ -281,7 +288,29 @@ public class RecipeManager extends Manager {
 
     public void insertRecipe(String query, int from, int to) throws AppException{
         try{
-            
+            // Fetch JSON from api url
+            URL url = new URL("https://api.edamam.com/search?app_id=3ef87764&app_key=f6329aeb0ce6a806b529977877a9b5a4%20&q="+query+"&from="+from+"&to="+to);
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+            String json = "";
+            String str;
+            while (null != (str = br.readLine())) {
+                json+=str;
+            }
+            System.out.println(url.toString());
+            System.out.println(json);
+
+            // Build object and insert into database
+            RecipeQueryRes queryRes = new Gson().fromJson(json, RecipeQueryRes.class);
+            for(Hit hit: queryRes.getHits()){
+                RecipeFromApi recipeFromApi = hit.getRecipe();
+                Recipe recipe = new Recipe("R"+CounterManager.getInstance().pushCount(),
+                        recipeFromApi.getLabel(),
+                        recipeFromApi.getCaloriesAsDouble(),
+                        recipeFromApi.getImage(),
+                        recipeFromApi.getIngredients());
+                recipe.setRating(5);
+                createRecipe(recipe);
+            }
         }catch (Exception ex){
             throw handleException("Error inserting recipes to DB!", ex);
         }

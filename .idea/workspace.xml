@@ -6,18 +6,20 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/UserHttpInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/UserHttpInterface.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/UserManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/UserManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/FavoriteList.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/FavoriteList.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/WishList.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/WishList.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/RecipeManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/managers/RecipeManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/Ingredient.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/cmu/ratatouille/models/Ingredient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/ratatouille.war" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/ratatouille.war" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/RecipeHttpInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/CounterManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/CounterManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/RecipeManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/RecipeManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/Counter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/Counter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/Ingredient.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -252,7 +254,7 @@
       <workItem from="1574022848920" duration="10042000" />
       <workItem from="1574135412148" duration="1124000" />
       <workItem from="1574752933657" duration="758000" />
-      <workItem from="1574792779730" duration="6637000" />
+      <workItem from="1574792779730" duration="9971000" />
     </task>
     <task id="LOCAL-00001" summary="1. Fix param-value error&#10;2. Create object user and recipe&#10;3. Link httpinterface for recipe functions">
       <created>1572203456397</created>
