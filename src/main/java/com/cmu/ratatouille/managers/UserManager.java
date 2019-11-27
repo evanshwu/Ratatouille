@@ -1,6 +1,7 @@
 package com.cmu.ratatouille.managers;
 
 import com.cmu.ratatouille.http.utils.StringUtil;
+import com.google.gson.Gson;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.cmu.ratatouille.exceptions.AppException;
@@ -34,14 +35,8 @@ public class UserManager extends Manager {
 
         try{
             JSONObject json = new JSONObject(user);
-
-            Document newDoc = new Document()
-                    .append("username", user.getUsername())
-                    .append("email",user.getEmail())
-                    .append("height", user.getHeight())
-                    .append("weight", user.getWeight())
-                    .append("age", user.getAge())
-                    .append("password", user.getGender());
+            Gson gson = new Gson();
+            Document newDoc = Document.parse(gson.toJson(user));
             if (newDoc != null)
                 userCollection.insertOne(newDoc);
             else
@@ -56,13 +51,8 @@ public class UserManager extends Manager {
     public void updateUser( User user) throws AppException {
         try {
             Bson filter = new Document("username", user.getUsername());
-            Bson newValue = new Document()
-                    .append("username", user.getUsername())
-                    .append("email",user.getEmail())
-                    .append("height", user.getHeight())
-                    .append("weight", user.getWeight())
-                    .append("age", user.getAge())
-                    .append("password", user.getGender());
+            Gson gson =new Gson();
+            Bson newValue = Document.parse(gson.toJson(user));
             Bson updateOperationDocument = new Document("$set", newValue);
 
             if (newValue != null)
@@ -88,7 +78,6 @@ public class UserManager extends Manager {
         try{
             ArrayList<User> userList = new ArrayList<>();
             FindIterable<Document> userDocs = userCollection.find();
-            System.out.println();
             for(Document userDoc: userDocs) {
                 User user = new User(
                         userDoc.getObjectId("_id").toString(),
