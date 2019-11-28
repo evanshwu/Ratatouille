@@ -1,16 +1,14 @@
 package com.cmu.ratatouille.managers;
 
-import com.cmu.ratatouille.http.utils.StringUtil;
-import com.google.gson.Gson;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
 import com.cmu.ratatouille.exceptions.AppException;
 import com.cmu.ratatouille.exceptions.AppInternalServerException;
 import com.cmu.ratatouille.models.User;
 import com.cmu.ratatouille.utils.MongoPool;
+import com.google.gson.Gson;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
 import java.util.ArrayList;

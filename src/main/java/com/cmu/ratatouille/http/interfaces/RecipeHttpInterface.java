@@ -36,7 +36,6 @@ public class RecipeHttpInterface extends HttpInterface {
 
 //            ArrayList<String> ingredients = new ArrayList<>();
 //            JSONArray ingredientArray = json.getJSONArray("ingredients");
-//            System.out.println("[SIZE]"+ingredientArray.length());
 //            for(int i=0;i<ingredientArray.length();i++)
 //                ingredients.add(ingredientArray.getString(i));
 //
@@ -191,5 +190,6 @@ public class RecipeHttpInterface extends HttpInterface {
             throw handleException("GET /insert", e);
         }
     }
+
 
 }
