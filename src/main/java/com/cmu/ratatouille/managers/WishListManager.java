@@ -31,7 +31,6 @@ public class WishListManager extends Manager {
     }
 
     public void createWishList(WishList wishlist) throws AppException {
-
         try{
             JSONObject json = new JSONObject(wishlist);
             Gson gson = new Gson();

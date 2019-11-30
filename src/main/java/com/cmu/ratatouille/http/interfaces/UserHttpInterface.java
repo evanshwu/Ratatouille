@@ -68,15 +68,17 @@ public class UserHttpInterface extends HttpInterface {
                 FindIterable<Document> userDocs = MongoPool.getInstance().getCollection("users").find().sort(Sorts.ascending(sortBy));
                 ArrayList<User> userList = new ArrayList<>();
                 for (Document userDoc : userDocs) {
-                    User user = new User(
-                            userDoc.getObjectId("_id").toString(),
-                            userDoc.getString("username"),
-                            userDoc.getString("email"),
-                            userDoc.getDouble("height"),
-                            userDoc.getDouble("weight"),
-                            userDoc.getInteger("age"),
-                            userDoc.getString("gender")
-                    );
+                    User user = new Gson().fromJson(userDoc.toJson(), User.class);
+                    user.setUserId(userDoc.getObjectId("_id").toString());
+//                    User user = new User(
+//                            userDoc.getObjectId("_id").toString(),
+//                            userDoc.getString("username"),
+//                            userDoc.getString("email"),
+//                            userDoc.getDouble("height"),
+//                            userDoc.getDouble("weight"),
+//                            userDoc.getInteger("age"),
+//                            userDoc.getString("gender")
+//                    );
                     userList.add(user);
                 }
                 if (userList != null)
@@ -92,15 +94,17 @@ public class UserHttpInterface extends HttpInterface {
                 FindIterable<Document> userDocs = MongoPool.getInstance().getCollection("users").find().skip(pageSize * (page - 1)).limit(pageSize);
                 ArrayList<User> userList = new ArrayList<>();
                 for (Document userDoc : userDocs) {
-                    User user = new User(
-                            userDoc.getObjectId("_id").toString(),
-                            userDoc.getString("username"),
-                            userDoc.getString("email"),
-                            userDoc.getDouble("height"),
-                            userDoc.getDouble("weight"),
-                            userDoc.getInteger("age"),
-                            userDoc.getString("gender")
-                    );
+                    User user = new Gson().fromJson(userDoc.toJson(), User.class);
+                    user.setUserId(userDoc.getObjectId("_id").toString());
+//                    User user = new User(
+//                            userDoc.getObjectId("_id").toString(),
+//                            userDoc.getString("username"),
+//                            userDoc.getString("email"),
+//                            userDoc.getDouble("height"),
+//                            userDoc.getDouble("weight"),
+//                            userDoc.getInteger("age"),
+//                            userDoc.getString("gender")
+//                    );
                     userList.add(user);
                 }
                 if (userList != null)
@@ -113,7 +117,7 @@ public class UserHttpInterface extends HttpInterface {
         } else {
             try {
                 AppLogger.info("Got an API call");
-                ArrayList<User> users = UserManager.getInstance().getUserById(name);
+                ArrayList<User> users = UserManager.getInstance().getUserByName(name);
 
                 if (users != null)
                     return new AppResponse(users);
@@ -125,7 +129,7 @@ public class UserHttpInterface extends HttpInterface {
         }
     }
 
-
+    //TODO: Patch user does not change wishlist, favoritelist, and meal history
     @PATCH
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})

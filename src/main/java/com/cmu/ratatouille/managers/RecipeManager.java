@@ -48,7 +48,6 @@ public class RecipeManager extends Manager {
 //            }
 //
 //            Document newRecipe = new Document()
-//                    // TODO: Create UID generator
 //                    .append("recipeId", recipe.getRecipeId())
 //                    .append("calorie", recipe.getCalorie())
 //                    .append("rating", 0)
@@ -163,7 +162,7 @@ public class RecipeManager extends Manager {
         }
     }
 
-    //TODO: Test required
+
     public ArrayList<Recipe> getRecipeWithFiltersAndSortings(String ingredients, String calFrom, String calTo, String ratingFrom, String sortBy, String orderBy) throws AppException {
         AppLogger.info("[ingredients]="+ingredients+"[cal]"+calFrom+calTo+"[rating]"+ratingFrom+"[sortby]"+sortBy+"[orderby]"+orderBy);
         BasicDBObject queryObject = new BasicDBObject();

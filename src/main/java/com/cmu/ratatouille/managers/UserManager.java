@@ -28,11 +28,9 @@ public class UserManager extends Manager {
         return _self;
     }
 
-
     public void createUser(User user) throws AppException {
-
         try{
-            JSONObject json = new JSONObject(user);
+//            JSONObject json = new JSONObject(user);
             Gson gson = new Gson();
             Document newDoc = Document.parse(gson.toJson(user));
             if (newDoc != null)
@@ -46,7 +44,7 @@ public class UserManager extends Manager {
 
     }
 
-    public void updateUser( User user) throws AppException {
+    public void updateUser(User user) throws AppException {
         try {
             Bson filter = new Document("username", user.getUsername());
             Gson gson =new Gson();
@@ -94,7 +92,7 @@ public class UserManager extends Manager {
         }
     }
 
-    public ArrayList<User> getUserById(String username) throws AppException {
+    public ArrayList<User> getUserByName(String username) throws AppException {
         try{
             ArrayList<User> userList = new ArrayList<>();
             FindIterable<Document> userDocs = userCollection.find();

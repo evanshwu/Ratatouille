@@ -64,60 +64,56 @@ public class MealManager extends Manager {
             MealPlan plan = new MealPlan();
             ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(null, calorie+100+"", calorie-100+"", "", "", "");
 
-            if(recipes.size()<21){
+            // Randomly selects recipes from the list
+            // Generate 21 random indexes without overlapping
+            Random random = new Random();
+            int[] indexes = new int[21];
+            Set<Integer> used = new HashSet<>();
+            for(int i=0;i<21;i++){
+                int newRandom;
+                do{
+                    newRandom = random.nextInt(recipes.size()+1);
+                }while(used.contains(newRandom));
+                indexes[i] = newRandom;
+                used.add(newRandom);
+            }
 
-            }else{
-                // Randomly selects recipes from the list
-                // Generate 21 random indexes without overlapping
-                Random random = new Random();
-                int[] indexes = new int[21];
-                Set<Integer> used = new HashSet<>();
-                for(int i=0;i<21;i++){
-                    int newRandom;
-                    do{
-                        newRandom = random.nextInt(recipes.size()+1);
-                    }while(used.contains(newRandom));
-                    indexes[i] = newRandom;
-                    used.add(newRandom);
-                }
+            int day = 1;
+            for(int j=0;j<21;j+=3){
+                ArrayList<Recipe> _recipe = new ArrayList<>();
+                _recipe.add(recipes.get(indexes[j]));
+                _recipe.add(recipes.get(indexes[j+1]));
+                _recipe.add(recipes.get(indexes[j+2]));
 
-                int day = 1;
-                for(int j=0;j<21;j+=3){
-                    ArrayList<Recipe> _recipe = new ArrayList<>();
-                    _recipe.add(recipes.get(indexes[j]));
-                    _recipe.add(recipes.get(indexes[j+1]));
-                    _recipe.add(recipes.get(indexes[j+2]));
-
-                    switch (day){
-                        case 1:
-                            plan.setMonday(_recipe);
-                            day++;
-                            break;
-                        case 2:
-                            plan.setTuesday(_recipe);
-                            day++;
-                            break;
-                        case 3:
-                            plan.setWednesday(_recipe);
-                            day++;
-                            break;
-                        case 4:
-                            plan.setThursday(_recipe);
-                            day++;
-                            break;
-                        case 5:
-                            plan.setFriday(_recipe);
-                            day++;
-                            break;
-                        case 6:
-                            plan.setSaturday(_recipe);
-                            day++;
-                            break;
-                        case 7:
-                            plan.setSunday(_recipe);
-                            day++;
-                            break;
-                    }
+                switch (day){
+                    case 1:
+                        plan.setMonday(_recipe);
+                        day++;
+                        break;
+                    case 2:
+                        plan.setTuesday(_recipe);
+                        day++;
+                        break;
+                    case 3:
+                        plan.setWednesday(_recipe);
+                        day++;
+                        break;
+                    case 4:
+                        plan.setThursday(_recipe);
+                        day++;
+                        break;
+                    case 5:
+                        plan.setFriday(_recipe);
+                        day++;
+                        break;
+                    case 6:
+                        plan.setSaturday(_recipe);
+                        day++;
+                        break;
+                    case 7:
+                        plan.setSunday(_recipe);
+                        day++;
+                        break;
                 }
             }
             return plan;
