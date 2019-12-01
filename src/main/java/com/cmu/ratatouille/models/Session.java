@@ -1,9 +1,18 @@
 package com.cmu.ratatouille.models;
 
+import java.util.UUID;
+
 public class Session {
-    public String token = null;
-    public String userId = null;
-    public String userName = null;
+
+    public String token;
+    public String userId;
+
+    public Session(User user) throws Exception{
+        this.userId = user.userId;
+        //this.token = APPCrypt.encrypt(user.id);
+        this.token = UUID.randomUUID().toString();
+    }
+
 
     public String getToken() {
         return token;
@@ -19,13 +28,5 @@ public class Session {
 
     public void setUserId(String userId) {
         this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 }

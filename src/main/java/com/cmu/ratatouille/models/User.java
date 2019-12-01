@@ -7,7 +7,7 @@ public class User {
     String userId;
     String username;
     String email;
-    char[] password;
+    String password;
     WishList wishList;
     FavoriteList favoriteList;
     double height;
@@ -17,14 +17,24 @@ public class User {
     String exercise_frequency;
     ArrayList<MealHistory> mealHistories;
 
-    public User(String id, String username, String email, double height, double weight, int age, String gender) {
-        this.userId = id;
+    public User(String userId, String username, String email, String password, WishList wishList, FavoriteList favoriteList, double height, double weight, int age, String gender, ArrayList<String> type, ArrayList<String> exercise_frequency) {
+        this.userId = userId;
         this.username = username;
         this.email = email;
+        this.password = password;
+        this.wishList = wishList;
+        this.favoriteList = favoriteList;
         this.height = height;
         this.weight = weight;
         this.age = age;
         this.gender = gender;
+        this.type = type;
+        this.exercise_frequency = exercise_frequency;
+    }
+    
+    // Constructor for login actions
+    public User(String userId){
+        this.userId = userId;
     }
 
     public String getUserId() {
