@@ -3,7 +3,6 @@ package com.cmu.ratatouille.managers;
 import com.cmu.ratatouille.exceptions.AppException;
 import com.cmu.ratatouille.exceptions.AppInternalServerException;
 import com.cmu.ratatouille.models.Recipe;
-import com.cmu.ratatouille.models.User;
 import com.cmu.ratatouille.models.WishList;
 import com.cmu.ratatouille.utils.MongoPool;
 import com.google.gson.Gson;
@@ -13,7 +12,6 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.json.JSONObject;
 
-import javax.print.Doc;
 import java.util.ArrayList;
 
 public class WishListManager extends Manager {
