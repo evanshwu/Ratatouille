@@ -30,12 +30,12 @@ public class UserManager extends Manager {
 
     public void createUser(User user) throws AppException {
         try{
-//            JSONObject json = new JSONObject(user);
             Gson gson = new Gson();
             Document newDoc = Document.parse(gson.toJson(user));
-            if (newDoc != null)
+            if (newDoc != null){
                 userCollection.insertOne(newDoc);
-            else
+                MealManager.getInstance().pushMeal(user);
+            }else
                 throw new AppInternalServerException(0, "Failed to create new user");
 
         }catch(Exception e){

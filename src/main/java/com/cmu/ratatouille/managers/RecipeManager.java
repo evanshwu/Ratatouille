@@ -169,7 +169,7 @@ public class RecipeManager extends Manager {
         List<Bson> filters = new ArrayList<>();
         List<BasicDBObject> queryObjectList = new ArrayList<>();
         // Check ingredients
-        if(ingredients!=null){
+        if(ingredients!=null && !ingredients.equals("")){
             AppLogger.info("[getRecipeWithFiltersAndSortings] ingredient query: "+ingredients);
             Bson ingredientFilter = Filters.regex("ingredient", ingredients);
             filters.add(ingredientFilter);
@@ -179,17 +179,17 @@ public class RecipeManager extends Manager {
         }
         //Check calorie range
         if(!calFrom.equals("") && !calTo.equals("")){
-            AppLogger.info("[getRecipeWithFiltersAndSortings] calorie query: "+calFrom+"~"+calTo);
+            AppLogger.info("[getRecipeWithFiltersAndSortings] calorie query: "+calFrom.split("\\.")[0]+"~"+calTo.split("\\.")[0]);
             Bson calorieRangeFilter = Filters.and(
-                    Filters.gte("calorie", Integer.parseInt(calFrom)),
-                    Filters.lte("calorie", Integer.parseInt(calTo)));
+                    Filters.gte("calorie", Integer.parseInt(calFrom.split("\\.")[0])),
+                    Filters.lte("calorie", Integer.parseInt(calTo.split("\\.")[0])));
             filters.add(calorieRangeFilter);
             BasicDBObject gtCalQuery = new BasicDBObject();
-            gtCalQuery.put("calorie", new BasicDBObject("$gt", Integer.parseInt(calFrom)).append("$lt", Integer.parseInt(calTo)));
+            gtCalQuery.put("calorie", new BasicDBObject("$gt", Integer.parseInt(calFrom.split("\\.")[0])).append("$lt", Integer.parseInt(calTo.split("\\.")[0])));
             queryObjectList.add(gtCalQuery);
         }
         // Check rating range
-        if(ratingFrom!=null) {
+        if(ratingFrom!=null && !ratingFrom.equals("")) {
             AppLogger.info("[getRecipeWithFiltersAndSortings] ratings query: "+ratingFrom+"~5");
             Bson ratingFilter = Filters.gte("rating", ratingFrom);
             filters.add(ratingFilter);
@@ -198,6 +198,7 @@ public class RecipeManager extends Manager {
             queryObjectList.add(gtRateQuery);
         }
 
+        System.out.println("Filter="+filters.toString());
         FindIterable<Document> recipeDocs;
         if(filters.size()>1)
             recipeDocs = recipeCollection.find(Filters.and(filters));
@@ -230,6 +231,7 @@ public class RecipeManager extends Manager {
 //                    _ingredients
 //            );
             Recipe recipe = new Gson().fromJson(recipeDoc.toJson(), Recipe.class);
+            System.out.println("Got recipe "+recipe.getRecipeName());
             recipe.setRating(recipeDoc.getDouble("rating"));
             // Add to list
             recipeList.add(recipe);

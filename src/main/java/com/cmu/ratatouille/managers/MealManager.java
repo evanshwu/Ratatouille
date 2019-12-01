@@ -27,9 +27,16 @@ public class MealManager extends Manager {
         this.userCollection = MongoPool.getInstance().getCollection("users");
     }
 
+    public static MealManager getInstance(){
+        if (_self == null)
+            _self = new MealManager();
+        return _self;
+    }
+
     // Push to history and add new meal plan
     public void pushMeal(User user) throws AppException{
         try{
+            System.out.println("Inside push meal");
             ArrayList<MealHistory> history = user.getMealHistories();
             MealHistory newRecord = new MealHistory();
 
@@ -48,6 +55,7 @@ public class MealManager extends Manager {
             }else{
                 newRecord.setDate(DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDateTime.now()));
                 newRecord.setMealPlan(plan);
+                history = new ArrayList<>();
                 history.add(newRecord);
 
                 user.setMealHistories(history);
@@ -62,28 +70,31 @@ public class MealManager extends Manager {
     public MealPlan recommendMeal(Double calorie) throws AppException{
         try{
             MealPlan plan = new MealPlan();
-            ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(null, calorie+100+"", calorie-100+"", "", "", "");
-
+            ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(null, calorie-100+"", calorie+100+"", null, null, null);
+            System.out.println("Got recipe size="+recipes.size());
             // Randomly selects recipes from the list
             // Generate 21 random indexes without overlapping
             Random random = new Random();
             int[] indexes = new int[21];
-            Set<Integer> used = new HashSet<>();
+            ArrayList<Integer> used = new ArrayList<>();
             for(int i=0;i<21;i++){
-                int newRandom;
-                do{
-                    newRandom = random.nextInt(recipes.size()+1);
-                }while(used.contains(newRandom));
+                //int newRandom = random.nextInt(recipes.size()+1);
+                int newRandom = getRandom(0, recipes.size()-1);
+//                System.out.println("Random generated: " + newRandom);
                 indexes[i] = newRandom;
                 used.add(newRandom);
             }
 
             int day = 1;
             for(int j=0;j<21;j+=3){
+//                System.out.println("day "+day);
                 ArrayList<Recipe> _recipe = new ArrayList<>();
                 _recipe.add(recipes.get(indexes[j]));
                 _recipe.add(recipes.get(indexes[j+1]));
                 _recipe.add(recipes.get(indexes[j+2]));
+//                System.out.println("recipe="+recipes.get(indexes[j]).getRecipeName());
+//                System.out.println("recipe="+recipes.get(indexes[j+1]).getRecipeName());
+//                System.out.println("recipe="+recipes.get(indexes[j+2]).getRecipeName());
 
                 switch (day){
                     case 1:
@@ -120,8 +131,10 @@ public class MealManager extends Manager {
         }catch(Exception ex){
             throw handleException("Error calculating meal plans!", ex);
         }
+    }
 
-
+    public int getRandom(int min, int max){
+        return (int)(Math.random() * ((max - min) + 1)) + min;
     }
 
 

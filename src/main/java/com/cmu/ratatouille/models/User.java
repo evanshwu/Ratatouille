@@ -27,18 +27,6 @@ public class User {
         this.gender = gender;
     }
 
-    public User(String id, String username, String email, double height, double weight, int age, String gender,
-                FavoriteList favoriteList, WishList wishList, String exercise_frequency, ArrayList<MealHistory> mealHistories) {
-        this.userId = id;
-        this.username = username;
-        this.email = email;
-        this.height = height;
-        this.weight = weight;
-        this.age = age;
-        this.gender = gender;
-        this.mealHistories = mealHistories;
-    }
-
     public String getUserId() {
         return userId;
     }
