@@ -7,19 +7,16 @@ import com.cmu.ratatouille.managers.ConversationManager;
 import com.cmu.ratatouille.managers.RecipeManager;
 import com.cmu.ratatouille.models.Conversation;
 import com.cmu.ratatouille.models.Message;
-import com.cmu.ratatouille.models.Recipe;
 import com.cmu.ratatouille.utils.AppLogger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.Gson;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Path("/conversations")

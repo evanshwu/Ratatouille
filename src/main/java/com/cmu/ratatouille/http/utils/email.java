@@ -1,5 +1,5 @@
 package com.cmu.ratatouille.http.utils;
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
+
 import org.apache.commons.validator.routines.EmailValidator;
 
 import javax.mail.internet.AddressException;

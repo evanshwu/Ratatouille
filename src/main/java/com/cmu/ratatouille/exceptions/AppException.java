@@ -4,6 +4,7 @@ import com.cmu.ratatouille.http.exceptions.HttpBadRequestException;
 import com.cmu.ratatouille.http.exceptions.HttpInternalServerException;
 import com.cmu.ratatouille.http.exceptions.HttpNotFoundException;
 import com.cmu.ratatouille.http.exceptions.HttpUnauthorizedException;
+
 import javax.ws.rs.WebApplicationException;
 
 public class AppException extends Exception{

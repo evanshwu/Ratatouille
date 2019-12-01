@@ -1,6 +1,5 @@
 package com.cmu.ratatouille.http;
 
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 
 
