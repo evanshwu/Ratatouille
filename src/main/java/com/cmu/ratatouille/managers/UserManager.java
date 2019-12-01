@@ -1,6 +1,9 @@
 package com.cmu.ratatouille.managers;
 
+import com.cmu.ratatouille.exceptions.AppUnauthorizedException;
 import com.cmu.ratatouille.http.utils.StringUtil;
+import com.cmu.ratatouille.models.FavoriteList;
+import com.cmu.ratatouille.models.Session;
 import com.google.gson.Gson;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -13,6 +16,7 @@ import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.json.JSONObject;
 
+import javax.ws.rs.core.HttpHeaders;
 import java.util.ArrayList;
 
 public class UserManager extends Manager {
@@ -48,8 +52,17 @@ public class UserManager extends Manager {
 
     }
 
-    public void updateUser( User user) throws AppException {
+    public void updateUser(HttpHeaders headers, User user, boolean login) throws AppException {
         try {
+            if(login){
+                Session session = SessionManager.getInstance().getSessionForToken(headers);
+                System.out.println("Login activity");
+                if(!session.getUserId().equals(user.getUserId())){
+                    throw new AppUnauthorizedException(70,"Invalid user id");
+                }else
+                    return;
+            }
+
             Bson filter = new Document("username", user.getUsername());
             Gson gson =new Gson();
             Bson newValue = Document.parse(gson.toJson(user));
@@ -78,19 +91,14 @@ public class UserManager extends Manager {
         try{
             ArrayList<User> userList = new ArrayList<>();
             FindIterable<Document> userDocs = userCollection.find();
+
             for(Document userDoc: userDocs) {
-                User user = new User(
-                        userDoc.getObjectId("_id").toString(),
-                        userDoc.getString("username"),
-                        userDoc.getString("email"),
-                        userDoc.getDouble("height"),
-                        userDoc.getDouble("weight"),
-                        userDoc.getInteger("age"),
-                        userDoc.getString("gender")
-                );
-                userList.add(user);
+                User _userList = new Gson().fromJson(userDoc.toJson(),User.class);
+                _userList.setUserId(userDoc.getObjectId("_id")+"");
+                userList.add(_userList);
             }
-            return new ArrayList<>(userList);
+
+            return userList;
         } catch(Exception e){
             throw handleException("Get User List", e);
         }
@@ -102,16 +110,8 @@ public class UserManager extends Manager {
             FindIterable<Document> userDocs = userCollection.find();
             for(Document userDoc: userDocs) {
                 if(userDoc.getString("username").equals(username)) {
-                    User user = new User(
-                            userDoc.getObjectId("_id").toString(),
-                            userDoc.getString("username"),
-                            userDoc.getString("email"),
-                            userDoc.getDouble("height"),
-                            userDoc.getDouble("weight"),
-                            userDoc.getInteger("age"),
-                            userDoc.getString("gender")
-                    );
-                    userList.add(user);
+                    User _userList = new Gson().fromJson(userDoc.toJson(),User.class);
+                    userList.add(_userList);
                 }
             }
             return new ArrayList<>(userList);

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d69a6060-2343-4d09-bf99-85957d848e98" name="Default Changelist" comment="" />
+    <list default="true" id="d69a6060-2343-4d09-bf99-85957d848e98" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/UserHttpInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/UserHttpInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/utils/CORSFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/utils/CORSFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/UserManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/User.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -232,7 +237,10 @@
       <workItem from="1573516232859" duration="5860000" />
       <workItem from="1573595313389" duration="88000" />
       <workItem from="1573680587376" duration="13083000" />
-      <workItem from="1574022848920" duration="10042000" />
+      <workItem from="1574022848920" duration="10537000" />
+      <workItem from="1574375644818" duration="673000" />
+      <workItem from="1574739543076" duration="957000" />
+      <workItem from="1575054828266" duration="12208000" />
     </task>
     <task id="LOCAL-00001" summary="1. Fix param-value error&#10;2. Create object user and recipe&#10;3. Link httpinterface for recipe functions">
       <created>1572203456397</created>
