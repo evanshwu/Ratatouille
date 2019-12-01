@@ -61,7 +61,7 @@ public class MealManager extends Manager {
                 user.setMealHistories(history);
             }
 
-            UserManager.getInstance().updateUser(user);
+            UserManager.getInstance().updateUser(null, user, false);
         }catch(Exception ex){
             throw handleException("Error pushing new meal record!", ex);
         }

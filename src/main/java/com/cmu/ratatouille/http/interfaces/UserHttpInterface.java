@@ -1,16 +1,5 @@
 package com.cmu.ratatouille.http.interfaces;
 
-import com.cmu.ratatouille.http.utils.StringUtil;
-import com.cmu.ratatouille.managers.BookManager;
-import com.cmu.ratatouille.managers.FavoriteManager;
-import com.cmu.ratatouille.managers.RecipeManager;
-import com.cmu.ratatouille.models.FavoriteList;
-import com.cmu.ratatouille.models.Recipe;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.google.gson.Gson;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
 import com.cmu.ratatouille.http.exceptions.HttpBadRequestException;
 import com.cmu.ratatouille.http.responses.AppResponse;
 import com.cmu.ratatouille.http.utils.PATCH;
@@ -24,11 +13,9 @@ import com.google.gson.Gson;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Sorts;
 import jdk.internal.jline.internal.Nullable;
-import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.bson.Document;
 import org.json.JSONObject;
 
-import javax.validation.constraints.Null;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -162,12 +149,6 @@ public class UserHttpInterface extends HttpInterface {
 
  return new AppResponse("Update Successful");
  }
-
- @DELETE
-
- @Consumes({ MediaType.APPLICATION_JSON })
- @Produces({ MediaType.APPLICATION_JSON })
- public AppResponse deleteUsers(@QueryParam("name") String username){
 
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON})

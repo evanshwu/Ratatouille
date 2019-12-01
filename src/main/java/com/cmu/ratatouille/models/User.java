@@ -17,7 +17,7 @@ public class User {
     String exercise_frequency;
     ArrayList<MealHistory> mealHistories;
 
-    public User(String userId, String username, String email, String password, WishList wishList, FavoriteList favoriteList, double height, double weight, int age, String gender, ArrayList<String> type, ArrayList<String> exercise_frequency) {
+    public User(String userId, String username, String email, String password, WishList wishList, FavoriteList favoriteList, double height, double weight, int age, String gender, String type, String exercise_frequency) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -28,7 +28,6 @@ public class User {
         this.weight = weight;
         this.age = age;
         this.gender = gender;
-        this.type = type;
         this.exercise_frequency = exercise_frequency;
     }
     
