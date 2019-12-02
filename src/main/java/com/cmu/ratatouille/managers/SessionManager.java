@@ -49,13 +49,13 @@ public class SessionManager {
             BasicDBObject query = new BasicDBObject();
 
             query.put("email", json.getString("email"));
-            //query.put("password", APPCrypt.encrypt(json.getString("password")));
-            //query.put("password", json.getString("password"));
+//            query.put("password", APPCrypt.encrypt(json.getString("password")));
+            query.put("password", json.getString("password"));
 
             Document item = userCollection.find(query).first();
             if (item == null) {
-                System.out.println("no user found for "+json.getString("email"));
-                throw new AppNotFoundException(0, "No user found matching credentials");
+//                throw new AppNotFoundException(0, "No user found matching credentials");
+                throw new AppUnauthorizedException(70, "Invalid email or password");
             }
 
             User user = convertDocumentToUser(item);

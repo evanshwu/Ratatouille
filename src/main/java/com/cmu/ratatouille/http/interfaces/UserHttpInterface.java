@@ -53,11 +53,21 @@ public class UserHttpInterface extends HttpInterface {
                                    @QueryParam("sortby") String sortBy,
                                    @QueryParam("pagesize") Integer pageSize,
                                    @QueryParam("page") Integer page,
-                                   @QueryParam("name") String name) {
-        if (sortBy == null && pageSize == null && page == null && name == null) {
+                                   @QueryParam("name") String name,
+                                   @QueryParam("userId") String userId) {
+        if(userId!=null && !userId.equals("")){
+            try{
+                User user = UserManager.getInstance().getUserById(headers, userId);
+                if(user!=null)
+                    return new AppResponse(user);
+                else
+                    throw new HttpBadRequestException(0, "No user found with such userId");
+            }catch(Exception ex){
+                throw handleException("GET /users", ex);
+            }
+        } else if (sortBy == null && pageSize == null && page == null && name == null) {
             try {
                 JSONObject json = null;
-                AppLogger.info("Got an API call");
                 ArrayList<User> users = UserManager.getInstance().getUserList();
 
                 if (users != null)
@@ -70,13 +80,10 @@ public class UserHttpInterface extends HttpInterface {
         } else if (sortBy != null && page == null && pageSize == null) {
             try {
                 JSONObject json = null;
-                AppLogger.info("hello");
                 FindIterable<Document> userDocs = MongoPool.getInstance().getCollection("users").find().sort(Sorts.ascending(sortBy));
-                AppLogger.info("size=" + userDocs.toString());
                 ArrayList<User> userList = new ArrayList<>();
                 for (Document userDoc : userDocs) {
-                    AppLogger.info("Got a doc");
-                    User _userList = new Gson().fromJson(userDoc.toJson(),User.class);
+                    User _userList = new Gson().fromJson(userDoc.toJson(), User.class);
                     userList.add(_userList);
                 }
                 if (userList != null)
@@ -92,8 +99,7 @@ public class UserHttpInterface extends HttpInterface {
                 FindIterable<Document> userDocs = MongoPool.getInstance().getCollection("users").find().skip(pageSize * (page - 1)).limit(pageSize);
                 ArrayList<User> userList = new ArrayList<>();
                 for (Document userDoc : userDocs) {
-                    AppLogger.info("Got a doc");
-                    User _userList = new Gson().fromJson(userDoc.toJson(),User.class);
+                    User _userList = new Gson().fromJson(userDoc.toJson(), User.class);
                     userList.add(_userList);
                 }
                 if (userList != null)
@@ -105,7 +111,6 @@ public class UserHttpInterface extends HttpInterface {
             }
         } else {
             try {
-                AppLogger.info("Got an API call");
                 ArrayList<User> users = UserManager.getInstance().getUserByName(name);
 
                 if (users != null)
@@ -119,36 +124,31 @@ public class UserHttpInterface extends HttpInterface {
     }
 
 
- @PATCH
- @Consumes({ MediaType.APPLICATION_JSON})
- @Produces({ MediaType.APPLICATION_JSON})
- public AppResponse patchUsers(@Context HttpHeaders headers,
-                               Object request,
-                               @Nullable @QueryParam("userId") String userId,
-                               @Nullable @QueryParam("username") String username){
-    JSONObject json = null;
-    try{
-        json = new JSONObject(ow.writeValueAsString(request));
-        User user;
-        boolean login = false;
-        if(username!=null && !username.equals("")){
-            // update
-            user = new Gson().fromJson(json.toString(),User.class);
-            user.setUsername(username);
-        }else{
-            // login
-            user = new User(userId);
-            login = true;
+    @PATCH
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    public AppResponse patchUsers(@Context HttpHeaders headers,
+                                  Object request,
+                                  @Nullable @QueryParam("userId") String userId,
+                                  @Nullable @QueryParam("username") String username) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(ow.writeValueAsString(request));
+            User user;
+            user = new Gson().fromJson(json.toString(), User.class);
+            if (username != null && !username.equals(""))
+                user.setUsername(username);
+            if (userId != null && !userId.equals(""))
+                user.setUserId(userId);
+
+            UserManager.getInstance().updateUser(headers, user, false);
+
+        } catch (Exception e) {
+            throw handleException("PATCH users/{username}", e);
         }
 
-    UserManager.getInstance().updateUser(headers, user, login);
-
- }catch (Exception e){
- throw handleException("PATCH users/{username}", e);
- }
-
- return new AppResponse("Update Successful");
- }
+        return new AppResponse("Update Successful");
+    }
 
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON})
@@ -162,7 +162,6 @@ public class UserHttpInterface extends HttpInterface {
         }
 
     }
-
 
 
 }

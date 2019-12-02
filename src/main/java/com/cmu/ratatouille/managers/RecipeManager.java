@@ -2,10 +2,8 @@ package com.cmu.ratatouille.managers;
 
 import com.cmu.ratatouille.exceptions.AppException;
 import com.cmu.ratatouille.exceptions.AppInternalServerException;
-import com.cmu.ratatouille.models.Hit;
-import com.cmu.ratatouille.models.Recipe;
-import com.cmu.ratatouille.models.RecipeFromApi;
-import com.cmu.ratatouille.models.RecipeQueryRes;
+import com.cmu.ratatouille.exceptions.AppUnauthorizedException;
+import com.cmu.ratatouille.models.*;
 import com.cmu.ratatouille.utils.AppLogger;
 import com.cmu.ratatouille.utils.MongoPool;
 import com.google.gson.Gson;
@@ -18,6 +16,7 @@ import com.mongodb.operation.OrderBy;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import javax.ws.rs.core.HttpHeaders;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -268,8 +267,13 @@ public class RecipeManager extends Manager {
         }
     }
 
-    public void submitRating(String recipeId, double rating) throws AppException{
+    public void submitRating(HttpHeaders headers, String recipeId, double rating, String userId) throws AppException{
         try{
+            Session session = SessionManager.getInstance().getSessionForToken(headers);
+            if(!session.getUserId().equals(userId)){
+                throw new AppUnauthorizedException(70,"Invalid user id");
+            }
+
             ArrayList<Recipe> recipes = this.getRecipeById(recipeId);
             System.out.println("Got recipe" + recipes.get(0).getRecipeId());
             if(recipes.size()>0){

@@ -6,7 +6,7 @@ public class Config {
 
     private static Config config;
     private static HashMap<String, Object> currentConfig = new HashMap<>();
-    public static final String database = "ratatouille1";
+    public static final String database = "ratatouille";
     public static final int dbPort = 27017;
     public static final String dbHost = "localhost";
     public static String verion = "0.1.1";

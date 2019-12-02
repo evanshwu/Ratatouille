@@ -33,19 +33,6 @@ public class RecipeHttpInterface extends HttpInterface {
         try {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
-
-//            ArrayList<String> ingredients = new ArrayList<>();
-//            JSONArray ingredientArray = json.getJSONArray("ingredients");
-//            for(int i=0;i<ingredientArray.length();i++)
-//                ingredients.add(ingredientArray.getString(i));
-//
-//            Recipe newRecipe = new Recipe(
-//                    json.getString("recipeId"),
-//                    json.getString("recipeName"),
-//                    json.getDouble("calorie"),
-//                    json.getString("image"),
-//                    ingredients
-//            );
             Recipe newRecipe = new Gson().fromJson(json.toString(), Recipe.class);
             RecipeManager.getInstance().createRecipe(newRecipe);
             return new AppResponse("Insert Successful");
@@ -79,19 +66,6 @@ public class RecipeHttpInterface extends HttpInterface {
         try{
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
-
-//            ArrayList<String> ingredients = new ArrayList<>();
-//            JSONArray ingredientArray = json.getJSONArray("ingredients");
-//            for(int i=0;i<ingredientArray.length();i++)
-//                ingredients.add(ingredientArray.getString(i));
-//
-//            Recipe recipe = new Recipe(
-//                    json.getString("recipeId"),
-//                    json.getString("recipeName"),
-//                    json.getDouble("calorie"),
-//                    json.getString("image"),
-//                    ingredients
-//            );
             Recipe recipe = new Gson().fromJson(json.toString(), Recipe.class);
             RecipeManager.getInstance().updateRecipe(recipe);
         }catch (Exception e){
@@ -161,14 +135,17 @@ public class RecipeHttpInterface extends HttpInterface {
     @Path("/rate/{recipeId}")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public AppResponse postRatings(Object request, @PathParam("recipeId") String recipeId) {
+    public AppResponse postRatings(@Context HttpHeaders headers,
+                                   Object request,
+                                   @PathParam("recipeId") String recipeId,
+                                   @QueryParam("userId") String userId) {
         try {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
 
             Double rating = json.getDouble("rating");
 
-            RecipeManager.getInstance().submitRating(recipeId, rating);
+            RecipeManager.getInstance().submitRating(headers, recipeId, rating, userId);
             return new AppResponse("Insert Successful");
 
         } catch (Exception e) {

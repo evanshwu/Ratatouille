@@ -31,15 +31,16 @@ public class ConversationHttpInterface extends HttpInterface {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-    public AppResponse createConversation(Object request,
-                                          @QueryParam("userName") String userName) {
+    public AppResponse createConversation(@Context HttpHeaders headers,
+                                          Object request,
+                                          @QueryParam("userId") String userId) {
         try {
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             Message message = new Gson().fromJson(json.toString(), Message.class);
             message.setTimestamp(System.currentTimeMillis()+"");
 
-            ConversationManager.getInstance().createConversation(message, userName);
+            ConversationManager.getInstance().createConversation(headers, message, userId);
             return new AppResponse("Insert Successful");
         } catch (Exception e) {
             throw handleException("POST recipes", e);
@@ -49,12 +50,9 @@ public class ConversationHttpInterface extends HttpInterface {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public AppResponse getConversation(@Context HttpHeaders headers,
-                                       @QueryParam("userName") String userName){
+                                       @QueryParam("userId") String userId){
         try{
-            AppLogger.info("Got an API call");
-
-            //ArrayList<Recipe> recipes = RecipeManager.getInstance().getRecipeById(recipeId);
-            ArrayList<Conversation> conversations = ConversationManager.getInstance().getConversationsByUserName(userName);
+            ArrayList<Conversation> conversations = ConversationManager.getInstance().getConversationsByUserId(headers, userId);
             if(conversations.size()!=0)
                 return new AppResponse(conversations);
             else
@@ -67,78 +65,21 @@ public class ConversationHttpInterface extends HttpInterface {
     @PATCH
     @Consumes({ MediaType.APPLICATION_JSON})
     @Produces({ MediaType.APPLICATION_JSON})
-    public AppResponse patchConversation(Object request,
+    public AppResponse patchConversation(@Context HttpHeaders headers,
+                                         Object request,
                                          @QueryParam("conversationId") String conversationId,
-                                         @QueryParam("userName") String userName){
+                                         @QueryParam("userId") String userId){
         try{
             JSONObject json = null;
             json = new JSONObject(ow.writeValueAsString(request));
             Message message = new Gson().fromJson(json.toString(), Message.class);
             message.setTimestamp(System.currentTimeMillis()+"");
 
-            ConversationManager.getInstance().updateConversation(message, userName, conversationId);
+            ConversationManager.getInstance().updateConversation(headers, message, userId, conversationId);
         }catch (Exception e){
             throw handleException("PATCH conversations", e);
         }
         return new AppResponse("Update Successful");
     }
-
-    @DELETE
-    @Path("/{recipeId}")
-    @Consumes({ MediaType.APPLICATION_JSON })
-    @Produces({ MediaType.APPLICATION_JSON })
-    public AppResponse deleteConversation(@PathParam("recipeId") String recipeId){
-        try{
-            RecipeManager.getInstance().deleteRecipe(recipeId);
-            return new AppResponse("Delete Successful");
-        }catch (Exception e){
-            throw handleException("DELETE recipes/{recipeId}", e);
-        }
-    }
-
-//    @GET
-//    @Consumes({ MediaType.APPLICATION_JSON })
-//    @Produces({ MediaType.APPLICATION_JSON })
-//    public AppResponse getConversations(@Context HttpHeaders headers,
-//                                  @QueryParam("recipeId") String recipeId,
-//                                  @QueryParam("ingredient") String ingredients,
-//                                  @QueryParam("calorie") String calorie,
-//                                  @QueryParam("rating") String rating,
-//                                  @QueryParam("sortby") String sortBy,
-//                                  @QueryParam("orderby") String orderBy,
-//                                  @QueryParam("offset") Integer offset,
-//                                  @QueryParam("count") Integer count){
-//        try{
-//            ArrayList<Recipe> recipes = new ArrayList<>();
-//            if(recipeId!=null){
-//                recipes = RecipeManager.getInstance().getRecipeById(recipeId);
-//            }else if(ingredients!=null || calorie!=null || rating!=null){
-//                // Process raw calorie string
-//                String calFrom = "", calTo = "";
-//                if(calorie!=null && calorie.contains("to")){
-//                    String[] strary = calorie.split("to");
-//                    calFrom = strary[0];
-//                    calTo = strary[1];
-//                }else if(calorie!=null && !calorie.contains("to")){
-//                    calFrom = calorie;
-//                    calTo = Integer.MAX_VALUE+"";
-//                }
-//                recipes = RecipeManager.getInstance().getRecipeWithFiltersAndSortings(ingredients, calFrom, calTo, rating, sortBy, orderBy);
-//            }else if(offset!=null && count!=null){
-//                recipes = RecipeManager.getInstance().getRecipeListPaginated(offset, count);
-//            }else{
-//                // Get all
-//                recipes = RecipeManager.getInstance().getAllRecipes();
-//            }
-//
-//            if(recipes != null)
-//                return new AppResponse(recipes);
-//            else
-//                throw new HttpBadRequestException(0, "Problem with getting recipes");
-//        }catch (Exception e){
-//            throw handleException("GET recipes", e);
-//        }
-//    }
-
 
 }

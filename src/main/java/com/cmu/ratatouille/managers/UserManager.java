@@ -1,5 +1,6 @@
 package com.cmu.ratatouille.managers;
 
+import com.cmu.ratatouille.exceptions.AppBadRequestException;
 import com.cmu.ratatouille.exceptions.AppException;
 import com.cmu.ratatouille.exceptions.AppInternalServerException;
 import com.cmu.ratatouille.exceptions.AppUnauthorizedException;
@@ -9,9 +10,12 @@ import com.cmu.ratatouille.utils.MongoPool;
 import com.google.gson.Gson;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.HttpHeaders;
 import java.util.ArrayList;
 
@@ -32,6 +36,11 @@ public class UserManager extends Manager {
 
     public void createUser(User user) throws AppException {
         try{
+            // Check email
+            if(!EmailValidator.getInstance().isValid(user.getEmail())){
+                throw new AppBadRequestException(0, "Incorrect email!");
+            }
+
             Gson gson = new Gson();
             Document newDoc = Document.parse(gson.toJson(user));
             if (newDoc != null){
@@ -46,15 +55,13 @@ public class UserManager extends Manager {
 
     }
 
-    public void updateUser(HttpHeaders headers, User user, boolean login) throws AppException {
+    public void updateUser(HttpHeaders headers, User user, boolean admin) throws AppException {
         try {
-            if(login){
+            if(!admin){
                 Session session = SessionManager.getInstance().getSessionForToken(headers);
-                System.out.println("Login activity");
                 if(!session.getUserId().equals(user.getUserId())){
                     throw new AppUnauthorizedException(70,"Invalid user id");
-                }else
-                    return;
+                }
             }
 
             Bson filter = new Document("username", user.getUsername());
@@ -111,6 +118,26 @@ public class UserManager extends Manager {
             return new ArrayList<>(userList);
         } catch(Exception e){
             throw handleException("Get User List", e);
+        }
+    }
+
+    public User getUserById(HttpHeaders headers, String userId) throws AppException{
+        try{
+            Session session = SessionManager.getInstance().getSessionForToken(headers);
+            if(!session.getUserId().equals(userId)){
+                throw new AppUnauthorizedException(70,"Invalid user id");
+            }
+            Bson filter = new Document("_id", new ObjectId(userId));
+            Document userDoc = userCollection.find(filter).first();
+            if(userDoc!=null){
+                User user = new Gson().fromJson(userDoc.toJson(), User.class);
+                user.setUserId(userId);
+                return user;
+            }else{
+                throw new AppBadRequestException(0, "User not found");
+            }
+        }catch(Exception ex){
+            throw handleException("Get single user", ex);
         }
     }
 

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Conversation {
     public _id _id;
-    public String userName;
+    public String userId;
     public ArrayList<Message> messages;
 
-    public Conversation(String _id, String userName, ArrayList<Message> messages) {
-        this.userName = userName;
+    public Conversation(String _id, String userId, ArrayList<Message> messages) {
+        this.userId = userId;
         this.messages = messages;
     }
 
@@ -22,12 +22,12 @@ public class Conversation {
         this._id = _id_;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public ArrayList<Message> getMessages() {
