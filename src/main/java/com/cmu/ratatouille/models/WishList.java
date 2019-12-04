@@ -3,17 +3,13 @@ package com.cmu.ratatouille.models;
 import java.util.ArrayList;
 
 public class WishList {
-    ArrayList<Recipe> recipe;
+    ArrayList<String> recipes;
 
-    public WishList(ArrayList<Recipe> recipe) {
-        this.recipe = recipe;
+    public ArrayList<String> getRecipes() {
+        return recipes;
     }
 
-    public ArrayList<Recipe> getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(ArrayList<Recipe> recipe) {
-        this.recipe = recipe;
+    public void setRecipes(ArrayList<String> recipes) {
+        this.recipes = recipes;
     }
 }
