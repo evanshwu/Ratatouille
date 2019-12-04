@@ -169,10 +169,10 @@ public class RecipeManager extends Manager {
         // Check ingredients
         if(ingredients!=null && !ingredients.equals("")){
             AppLogger.info("[getRecipeWithFiltersAndSortings] ingredient query: "+ingredients);
-            Bson ingredientFilter = Filters.regex("ingredient", ingredients);
+            Bson ingredientFilter = Filters.regex("ingredients.text", ingredients);
             filters.add(ingredientFilter);
             BasicDBObject containsQuery = new BasicDBObject();
-            containsQuery.put("ingredient", "/"+ingredients+"/");
+            containsQuery.put("ingredients", "/"+ingredients+"/");
             queryObjectList.add(containsQuery);
         }
         //Check calorie range
