@@ -5,7 +5,6 @@ import com.cmu.ratatouille.http.responses.AppResponse;
 import com.cmu.ratatouille.http.utils.PATCH;
 import com.cmu.ratatouille.managers.UserManager;
 import com.cmu.ratatouille.models.User;
-import com.cmu.ratatouille.utils.AppLogger;
 import com.cmu.ratatouille.utils.MongoPool;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

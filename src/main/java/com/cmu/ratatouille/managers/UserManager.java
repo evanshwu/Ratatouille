@@ -15,7 +15,6 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.HttpHeaders;
 import java.util.ArrayList;
 
