@@ -1,10 +1,10 @@
 package com.cmu.ratatouille.managers;
 
-import com.mongodb.client.MongoCollection;
 import com.cmu.ratatouille.exceptions.AppException;
 import com.cmu.ratatouille.exceptions.AppInternalServerException;
 import com.cmu.ratatouille.utils.AppLogger;
 import com.cmu.ratatouille.utils.MongoPool;
+import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 
 

@@ -1,7 +1,5 @@
 package com.cmu.ratatouille.http.utils;
 
-import org.json.HTTP;
-
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
