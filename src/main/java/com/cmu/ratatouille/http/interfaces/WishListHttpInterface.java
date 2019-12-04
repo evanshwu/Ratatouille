@@ -46,7 +46,7 @@ public class WishListHttpInterface extends HttpInterface {
             return new AppResponse("Insert Successful");
 
         } catch (Exception e) {
-            throw handleException("POST recipes", e);
+            throw handleException("POST wishList", e);
         }
     }
     @DELETE
