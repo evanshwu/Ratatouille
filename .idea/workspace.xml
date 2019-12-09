@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d69a6060-2343-4d09-bf99-85957d848e98" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/WishListHttpInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/http/interfaces/WishListHttpInterface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/WishListManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/managers/WishListManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/WishList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/models/WishList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/cmu/ratatouille/utils/CalorieCalculator.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
