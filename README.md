@@ -8,11 +8,12 @@ Below are the resources that each of us worked on:
 
 ### Hsin-Han Wu 
 - Conversation Management
-- Rating Management
+- Rating Management with rate calculation
 - Recipe Search Service
 - Meal plans with calorie multiplier (based on user profile)
 - Email validation
 - Gateway service for recipe
+- Counter object for recipe insertion
 
 # Google Doc 
 - [app-xinyongl-final](https://docs.google.com/document/d/1_m-xtyL0uS8lvvWbWhwtu1kkPtPhyZGsOADbYZgGb50/edit?usp=sharing)
